@@ -1,0 +1,133 @@
+
+============================================================
+Assembling: program/test_alu.asm
+Output: results/test_alu.obj
+Debug log: /Users/wonjoonyun/Library/CloudStorage/OneDrive-TheUniversityofTexasatAustin/01_lecture/Computer_Architecture_Example/1_Opcode/debug/test_alu.asm.debug
+============================================================
+
+=== PASS 1: Building Symbol Table ===
+  [Line   1] Tokenize: '	.orig x3000'
+    -> Tokens: ['.orig', 'x3000']
+    -> Parse constant (hex): x3000 -> 12288 (0x3000)
+  [Line   1] .ORIG: Starting address = 0x3000 (12288)
+  [Line   2] Tokenize: '	add r0, r0, #15'
+    -> Tokens: ['add', 'r0', 'r0', '#15']
+  [Line   2] Address 0x3000: add (size: 2 bytes)
+  [Line   3] Tokenize: '	add r0, r0, #-16'
+    -> Tokens: ['add', 'r0', 'r0', '#-16']
+  [Line   3] Address 0x3002: add (size: 2 bytes)
+  [Line   4] Tokenize: '	add r1, r1, r0'
+    -> Tokens: ['add', 'r1', 'r1', 'r0']
+  [Line   4] Address 0x3004: add (size: 2 bytes)
+  [Line   5] Tokenize: '	and r1, r1, #1'
+    -> Tokens: ['and', 'r1', 'r1', '#1']
+  [Line   5] Address 0x3006: and (size: 2 bytes)
+  [Line   6] Tokenize: '	and r1, r1, r1'
+    -> Tokens: ['and', 'r1', 'r1', 'r1']
+  [Line   6] Address 0x3008: and (size: 2 bytes)
+  [Line   7] Tokenize: '	xor r2, r0, x0f'
+    -> Tokens: ['xor', 'r2', 'r0', 'x0f']
+  [Line   7] Address 0x300A: xor (size: 2 bytes)
+  [Line   8] Tokenize: '	xor r2, r0, r1'
+    -> Tokens: ['xor', 'r2', 'r0', 'r1']
+  [Line   8] Address 0x300C: xor (size: 2 bytes)
+  [Line   9] Tokenize: '	not r3, r0'
+    -> Tokens: ['not', 'r3', 'r0']
+  [Line   9] Address 0x300E: not (size: 2 bytes)
+  [Line  12] Tokenize: '	add r0, r0, #16'
+    -> Tokens: ['add', 'r0', 'r0', '#16']
+  [Line  12] Address 0x3010: add (size: 2 bytes)
+  [Line  14] Tokenize: '	.end'
+    -> Tokens: ['.end']
+  [Line  14] .END: End of assembly
+
+Symbol Table (0 symbols):
+Final address: 0x3012 (12306)
+==================================================
+
+=== PASS 2: Code Generation ===
+  [Line   1] Tokenize: '	.orig x3000'
+    -> Tokens: ['.orig', 'x3000']
+    -> Parse constant (hex): x3000 -> 12288 (0x3000)
+  [Line   1] Write .ORIG: 0x3000
+  [Line   2] Tokenize: '	add r0, r0, #15'
+    -> Tokens: ['add', 'r0', 'r0', '#15']
+  [Line   2] Address 0x3000: add ['r0', 'r0', '#15']
+    -> Parse register: r0 -> R0
+    -> Parse register: r0 -> R0
+    -> Parse constant (decimal): #15 -> 15 (0x000F)
+    -> ADD encoding (immediate): op=1, dr=R0, sr1=R0, imm5=15 -> 0x102F
+    -> Write: 0x102F (binary: 0001000000101111)
+  [Line   3] Tokenize: '	add r0, r0, #-16'
+    -> Tokens: ['add', 'r0', 'r0', '#-16']
+  [Line   3] Address 0x3002: add ['r0', 'r0', '#-16']
+    -> Parse register: r0 -> R0
+    -> Parse register: r0 -> R0
+    -> Parse constant (decimal): #-16 -> -16 (0x-010)
+    -> ADD encoding (immediate): op=1, dr=R0, sr1=R0, imm5=16 -> 0x1030
+    -> Write: 0x1030 (binary: 0001000000110000)
+  [Line   4] Tokenize: '	add r1, r1, r0'
+    -> Tokens: ['add', 'r1', 'r1', 'r0']
+  [Line   4] Address 0x3004: add ['r1', 'r1', 'r0']
+    -> Parse register: r1 -> R1
+    -> Parse register: r1 -> R1
+    -> Parse register: r0 -> R0
+    -> ADD encoding (register): op=1, dr=R1, sr1=R1, sr2=R0 -> 0x1240
+    -> Write: 0x1240 (binary: 0001001001000000)
+  [Line   5] Tokenize: '	and r1, r1, #1'
+    -> Tokens: ['and', 'r1', 'r1', '#1']
+  [Line   5] Address 0x3006: and ['r1', 'r1', '#1']
+    -> Parse register: r1 -> R1
+    -> Parse register: r1 -> R1
+    -> Parse constant (decimal): #1 -> 1 (0x0001)
+    -> AND encoding (immediate): op=5, dr=R1, sr1=R1, imm5=1 -> 0x5261
+    -> Write: 0x5261 (binary: 0101001001100001)
+  [Line   6] Tokenize: '	and r1, r1, r1'
+    -> Tokens: ['and', 'r1', 'r1', 'r1']
+  [Line   6] Address 0x3008: and ['r1', 'r1', 'r1']
+    -> Parse register: r1 -> R1
+    -> Parse register: r1 -> R1
+    -> Parse register: r1 -> R1
+    -> AND encoding (register): op=5, dr=R1, sr1=R1, sr2=R1 -> 0x5241
+    -> Write: 0x5241 (binary: 0101001001000001)
+  [Line   7] Tokenize: '	xor r2, r0, x0f'
+    -> Tokens: ['xor', 'r2', 'r0', 'x0f']
+  [Line   7] Address 0x300A: xor ['r2', 'r0', 'x0f']
+    -> Parse register: r2 -> R2
+    -> Parse register: r0 -> R0
+    -> Parse constant (hex): x0f -> 15 (0x000F)
+    -> XOR encoding (immediate): op=9, dr=R2, sr1=R0, imm5=15 -> 0x942F
+    -> Write: 0x942F (binary: 1001010000101111)
+  [Line   8] Tokenize: '	xor r2, r0, r1'
+    -> Tokens: ['xor', 'r2', 'r0', 'r1']
+  [Line   8] Address 0x300C: xor ['r2', 'r0', 'r1']
+    -> Parse register: r2 -> R2
+    -> Parse register: r0 -> R0
+    -> Parse register: r1 -> R1
+    -> XOR encoding (register): op=9, dr=R2, sr1=R0, sr2=R1 -> 0x9401
+    -> Write: 0x9401 (binary: 1001010000000001)
+  [Line   9] Tokenize: '	not r3, r0'
+    -> Tokens: ['not', 'r3', 'r0']
+  [Line   9] Address 0x300E: not ['r3', 'r0']
+    -> Parse register: r3 -> R3
+    -> Parse register: r0 -> R0
+    -> NOT encoding: dr=R3, sr=R0 -> 0x963F
+    -> Write: 0x963F (binary: 1001011000111111)
+  [Line  12] Tokenize: '	add r0, r0, #16'
+    -> Tokens: ['add', 'r0', 'r0', '#16']
+  [Line  12] Address 0x3010: add ['r0', 'r0', '#16']
+    -> Parse register: r0 -> R0
+    -> Parse register: r0 -> R0
+    -> Parse constant (decimal): #16 -> 16 (0x0010)
+    -> Sign extend: 16 -> -16 (5 bits)
+    -> ADD encoding (immediate): op=1, dr=R0, sr1=R0, imm5=16 -> 0x1030
+    -> Write: 0x1030 (binary: 0001000000110000)
+  [Line  14] Tokenize: '	.end'
+    -> Tokens: ['.end']
+  [Line  14] .END: Stopping assembly
+
+============================================================
+Assembly complete: program/test_alu.asm -> results/test_alu.obj
+Debug log saved to: /Users/wonjoonyun/Library/CloudStorage/OneDrive-TheUniversityofTexasatAustin/01_lecture/Computer_Architecture_Example/1_Opcode/debug/test_alu.asm.debug
+============================================================
+

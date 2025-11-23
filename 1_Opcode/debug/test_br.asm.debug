@@ -1,0 +1,132 @@
+
+============================================================
+Assembling: program/test_br.asm
+Output: results/test_br.obj
+Debug log: /Users/wonjoonyun/Library/CloudStorage/OneDrive-TheUniversityofTexasatAustin/01_lecture/Computer_Architecture_Example/1_Opcode/debug/test_br.asm.debug
+============================================================
+
+=== PASS 1: Building Symbol Table ===
+  [Line   1] Tokenize: '	.orig x3000'
+    -> Tokens: ['.orig', 'x3000']
+    -> Parse constant (hex): x3000 -> 12288 (0x3000)
+  [Line   1] .ORIG: Starting address = 0x3000 (12288)
+  [Line   2] Tokenize: '	br location'
+    -> Tokens: ['br', 'location']
+  [Line   2] Address 0x3000: br (size: 2 bytes)
+  [Line   3] Tokenize: '	brnzp location'
+    -> Tokens: ['brnzp', 'location']
+  [Line   3] Address 0x3002: brnzp (size: 2 bytes)
+  [Line   4] Tokenize: '	brn location'
+    -> Tokens: ['brn', 'location']
+  [Line   4] Address 0x3004: brn (size: 2 bytes)
+  [Line   5] Tokenize: '	brz location'
+    -> Tokens: ['brz', 'location']
+  [Line   5] Address 0x3006: brz (size: 2 bytes)
+  [Line   6] Tokenize: '	brp location'
+    -> Tokens: ['brp', 'location']
+  [Line   6] Address 0x3008: brp (size: 2 bytes)
+  [Line   7] Tokenize: '	brnz location'
+    -> Tokens: ['brnz', 'location']
+  [Line   7] Address 0x300A: brnz (size: 2 bytes)
+  [Line   8] Tokenize: '	brnp location'
+    -> Tokens: ['brnp', 'location']
+  [Line   8] Address 0x300C: brnp (size: 2 bytes)
+  [Line   9] Tokenize: '	brzp location'
+    -> Tokens: ['brzp', 'location']
+  [Line   9] Address 0x300E: brzp (size: 2 bytes)
+  [Line  11] Tokenize: 'location halt'
+    -> Tokens: ['location', 'halt']
+  [Line  11] Label 'location' -> 0x3010 (12304)
+  [Line  11] Address 0x3010: halt (size: 2 bytes)
+  [Line  13] Tokenize: '	.end'
+    -> Tokens: ['.end']
+  [Line  13] .END: End of assembly
+
+Symbol Table (1 symbols):
+  location             -> 0x3010 (12304)
+Final address: 0x3012 (12306)
+==================================================
+
+=== PASS 2: Code Generation ===
+  [Line   1] Tokenize: '	.orig x3000'
+    -> Tokens: ['.orig', 'x3000']
+    -> Parse constant (hex): x3000 -> 12288 (0x3000)
+  [Line   1] Write .ORIG: 0x3000
+  [Line   2] Tokenize: '	br location'
+    -> Tokens: ['br', 'location']
+  [Line   2] Address 0x3000: br ['location']
+    -> BR target: Symbol 'location' -> 0x3010
+    -> PC offset: target=0x3010, current=0x3000, offset=7 (9 bits)
+    -> Masked offset: 0x0007 (binary: 000000111)
+    -> BR encoding: n=1, z=1, p=1, offset=7 -> 0x0E07 (0000111000000111)
+    -> Write: 0x0E07 (binary: 0000111000000111)
+  [Line   3] Tokenize: '	brnzp location'
+    -> Tokens: ['brnzp', 'location']
+  [Line   3] Address 0x3002: brnzp ['location']
+    -> BR target: Symbol 'location' -> 0x3010
+    -> PC offset: target=0x3010, current=0x3002, offset=6 (9 bits)
+    -> Masked offset: 0x0006 (binary: 000000110)
+    -> BR encoding: n=1, z=1, p=1, offset=6 -> 0x0E06 (0000111000000110)
+    -> Write: 0x0E06 (binary: 0000111000000110)
+  [Line   4] Tokenize: '	brn location'
+    -> Tokens: ['brn', 'location']
+  [Line   4] Address 0x3004: brn ['location']
+    -> BR target: Symbol 'location' -> 0x3010
+    -> PC offset: target=0x3010, current=0x3004, offset=5 (9 bits)
+    -> Masked offset: 0x0005 (binary: 000000101)
+    -> BR encoding: n=1, z=0, p=0, offset=5 -> 0x0805 (0000100000000101)
+    -> Write: 0x0805 (binary: 0000100000000101)
+  [Line   5] Tokenize: '	brz location'
+    -> Tokens: ['brz', 'location']
+  [Line   5] Address 0x3006: brz ['location']
+    -> BR target: Symbol 'location' -> 0x3010
+    -> PC offset: target=0x3010, current=0x3006, offset=4 (9 bits)
+    -> Masked offset: 0x0004 (binary: 000000100)
+    -> BR encoding: n=0, z=1, p=0, offset=4 -> 0x0404 (0000010000000100)
+    -> Write: 0x0404 (binary: 0000010000000100)
+  [Line   6] Tokenize: '	brp location'
+    -> Tokens: ['brp', 'location']
+  [Line   6] Address 0x3008: brp ['location']
+    -> BR target: Symbol 'location' -> 0x3010
+    -> PC offset: target=0x3010, current=0x3008, offset=3 (9 bits)
+    -> Masked offset: 0x0003 (binary: 000000011)
+    -> BR encoding: n=0, z=0, p=1, offset=3 -> 0x0203 (0000001000000011)
+    -> Write: 0x0203 (binary: 0000001000000011)
+  [Line   7] Tokenize: '	brnz location'
+    -> Tokens: ['brnz', 'location']
+  [Line   7] Address 0x300A: brnz ['location']
+    -> BR target: Symbol 'location' -> 0x3010
+    -> PC offset: target=0x3010, current=0x300A, offset=2 (9 bits)
+    -> Masked offset: 0x0002 (binary: 000000010)
+    -> BR encoding: n=1, z=1, p=0, offset=2 -> 0x0C02 (0000110000000010)
+    -> Write: 0x0C02 (binary: 0000110000000010)
+  [Line   8] Tokenize: '	brnp location'
+    -> Tokens: ['brnp', 'location']
+  [Line   8] Address 0x300C: brnp ['location']
+    -> BR target: Symbol 'location' -> 0x3010
+    -> PC offset: target=0x3010, current=0x300C, offset=1 (9 bits)
+    -> Masked offset: 0x0001 (binary: 000000001)
+    -> BR encoding: n=1, z=0, p=1, offset=1 -> 0x0A01 (0000101000000001)
+    -> Write: 0x0A01 (binary: 0000101000000001)
+  [Line   9] Tokenize: '	brzp location'
+    -> Tokens: ['brzp', 'location']
+  [Line   9] Address 0x300E: brzp ['location']
+    -> BR target: Symbol 'location' -> 0x3010
+    -> PC offset: target=0x3010, current=0x300E, offset=0 (9 bits)
+    -> Masked offset: 0x0000 (binary: 000000000)
+    -> BR encoding: n=0, z=1, p=1, offset=0 -> 0x0600 (0000011000000000)
+    -> Write: 0x0600 (binary: 0000011000000000)
+  [Line  11] Tokenize: 'location halt'
+    -> Tokens: ['location', 'halt']
+  [Line  11] Address 0x3010: halt []
+    -> HALT encoding: -> 0xF025
+    -> Write: 0xF025 (binary: 1111000000100101)
+  [Line  13] Tokenize: '	.end'
+    -> Tokens: ['.end']
+  [Line  13] .END: Stopping assembly
+
+============================================================
+Assembly complete: program/test_br.asm -> results/test_br.obj
+Debug log saved to: /Users/wonjoonyun/Library/CloudStorage/OneDrive-TheUniversityofTexasatAustin/01_lecture/Computer_Architecture_Example/1_Opcode/debug/test_br.asm.debug
+============================================================
+

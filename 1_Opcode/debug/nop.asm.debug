@@ -1,0 +1,58 @@
+
+============================================================
+Assembling: program/nop.asm
+Output: results/nop.obj
+Debug log: /Users/wonjoonyun/Library/CloudStorage/OneDrive-TheUniversityofTexasatAustin/01_lecture/Computer_Architecture_Example/1_Opcode/debug/nop.asm.debug
+============================================================
+
+=== PASS 1: Building Symbol Table ===
+  [Line   1] Tokenize: '        .orig x3000'
+    -> Tokens: ['.orig', 'x3000']
+    -> Parse constant (hex): x3000 -> 12288 (0x3000)
+  [Line   1] .ORIG: Starting address = 0x3000 (12288)
+  [Line   2] Tokenize: '		nop'
+    -> Tokens: ['nop']
+  [Line   2] Address 0x3000: nop (size: 2 bytes)
+  [Line   3] Tokenize: '		nop'
+    -> Tokens: ['nop']
+  [Line   3] Address 0x3002: nop (size: 2 bytes)
+  [Line   4] Tokenize: '		nop'
+    -> Tokens: ['nop']
+  [Line   4] Address 0x3004: nop (size: 2 bytes)
+  [Line   5] Tokenize: '		.end'
+    -> Tokens: ['.end']
+  [Line   5] .END: End of assembly
+
+Symbol Table (0 symbols):
+Final address: 0x3006 (12294)
+==================================================
+
+=== PASS 2: Code Generation ===
+  [Line   1] Tokenize: '        .orig x3000'
+    -> Tokens: ['.orig', 'x3000']
+    -> Parse constant (hex): x3000 -> 12288 (0x3000)
+  [Line   1] Write .ORIG: 0x3000
+  [Line   2] Tokenize: '		nop'
+    -> Tokens: ['nop']
+  [Line   2] Address 0x3000: nop []
+    -> NOP encoding: -> 0x0000
+    -> Write: 0x0000 (binary: 0000000000000000)
+  [Line   3] Tokenize: '		nop'
+    -> Tokens: ['nop']
+  [Line   3] Address 0x3002: nop []
+    -> NOP encoding: -> 0x0000
+    -> Write: 0x0000 (binary: 0000000000000000)
+  [Line   4] Tokenize: '		nop'
+    -> Tokens: ['nop']
+  [Line   4] Address 0x3004: nop []
+    -> NOP encoding: -> 0x0000
+    -> Write: 0x0000 (binary: 0000000000000000)
+  [Line   5] Tokenize: '		.end'
+    -> Tokens: ['.end']
+  [Line   5] .END: Stopping assembly
+
+============================================================
+Assembly complete: program/nop.asm -> results/nop.obj
+Debug log saved to: /Users/wonjoonyun/Library/CloudStorage/OneDrive-TheUniversityofTexasatAustin/01_lecture/Computer_Architecture_Example/1_Opcode/debug/nop.asm.debug
+============================================================
+

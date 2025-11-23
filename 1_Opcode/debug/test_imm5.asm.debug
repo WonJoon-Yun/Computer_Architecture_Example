@@ -1,0 +1,386 @@
+
+============================================================
+Assembling: program/test_imm5.asm
+Output: results/test_imm5.obj
+Debug log: /Users/wonjoonyun/Library/CloudStorage/OneDrive-TheUniversityofTexasatAustin/01_lecture/Computer_Architecture_Example/1_Opcode/debug/test_imm5.asm.debug
+============================================================
+
+=== PASS 1: Building Symbol Table ===
+  [Line   1] Tokenize: '	.orig x3000'
+    -> Tokens: ['.orig', 'x3000']
+    -> Parse constant (hex): x3000 -> 12288 (0x3000)
+  [Line   1] .ORIG: Starting address = 0x3000 (12288)
+  [Line   2] Tokenize: '	add r0, r0, #-16'
+    -> Tokens: ['add', 'r0', 'r0', '#-16']
+  [Line   2] Address 0x3000: add (size: 2 bytes)
+  [Line   3] Tokenize: '	add r0, r0, #-15'
+    -> Tokens: ['add', 'r0', 'r0', '#-15']
+  [Line   3] Address 0x3002: add (size: 2 bytes)
+  [Line   4] Tokenize: '	add r0, r0, #-14'
+    -> Tokens: ['add', 'r0', 'r0', '#-14']
+  [Line   4] Address 0x3004: add (size: 2 bytes)
+  [Line   5] Tokenize: '	add r0, r0, #-13'
+    -> Tokens: ['add', 'r0', 'r0', '#-13']
+  [Line   5] Address 0x3006: add (size: 2 bytes)
+  [Line   6] Tokenize: '	add r0, r0, #-12'
+    -> Tokens: ['add', 'r0', 'r0', '#-12']
+  [Line   6] Address 0x3008: add (size: 2 bytes)
+  [Line   7] Tokenize: '	add r0, r0, #-11'
+    -> Tokens: ['add', 'r0', 'r0', '#-11']
+  [Line   7] Address 0x300A: add (size: 2 bytes)
+  [Line   8] Tokenize: '	add r0, r0, #-10'
+    -> Tokens: ['add', 'r0', 'r0', '#-10']
+  [Line   8] Address 0x300C: add (size: 2 bytes)
+  [Line   9] Tokenize: '	add r0, r0, #-9'
+    -> Tokens: ['add', 'r0', 'r0', '#-9']
+  [Line   9] Address 0x300E: add (size: 2 bytes)
+  [Line  10] Tokenize: '	add r0, r0, #-8'
+    -> Tokens: ['add', 'r0', 'r0', '#-8']
+  [Line  10] Address 0x3010: add (size: 2 bytes)
+  [Line  11] Tokenize: '	add r0, r0, #-7'
+    -> Tokens: ['add', 'r0', 'r0', '#-7']
+  [Line  11] Address 0x3012: add (size: 2 bytes)
+  [Line  12] Tokenize: '	add r0, r0, #-6'
+    -> Tokens: ['add', 'r0', 'r0', '#-6']
+  [Line  12] Address 0x3014: add (size: 2 bytes)
+  [Line  13] Tokenize: '	add r0, r0, #-5'
+    -> Tokens: ['add', 'r0', 'r0', '#-5']
+  [Line  13] Address 0x3016: add (size: 2 bytes)
+  [Line  14] Tokenize: '	add r0, r0, #-4'
+    -> Tokens: ['add', 'r0', 'r0', '#-4']
+  [Line  14] Address 0x3018: add (size: 2 bytes)
+  [Line  15] Tokenize: '	add r0, r0, #-3'
+    -> Tokens: ['add', 'r0', 'r0', '#-3']
+  [Line  15] Address 0x301A: add (size: 2 bytes)
+  [Line  16] Tokenize: '	add r0, r0, #-2'
+    -> Tokens: ['add', 'r0', 'r0', '#-2']
+  [Line  16] Address 0x301C: add (size: 2 bytes)
+  [Line  17] Tokenize: '	add r0, r0, #-1'
+    -> Tokens: ['add', 'r0', 'r0', '#-1']
+  [Line  17] Address 0x301E: add (size: 2 bytes)
+  [Line  18] Tokenize: '	add r0, r0, #0'
+    -> Tokens: ['add', 'r0', 'r0', '#0']
+  [Line  18] Address 0x3020: add (size: 2 bytes)
+  [Line  19] Tokenize: '	add r0, r0, #1'
+    -> Tokens: ['add', 'r0', 'r0', '#1']
+  [Line  19] Address 0x3022: add (size: 2 bytes)
+  [Line  20] Tokenize: '	add r0, r0, #2'
+    -> Tokens: ['add', 'r0', 'r0', '#2']
+  [Line  20] Address 0x3024: add (size: 2 bytes)
+  [Line  21] Tokenize: '	add r0, r0, #3'
+    -> Tokens: ['add', 'r0', 'r0', '#3']
+  [Line  21] Address 0x3026: add (size: 2 bytes)
+  [Line  22] Tokenize: '	add r0, r0, #4'
+    -> Tokens: ['add', 'r0', 'r0', '#4']
+  [Line  22] Address 0x3028: add (size: 2 bytes)
+  [Line  23] Tokenize: '	add r0, r0, #5'
+    -> Tokens: ['add', 'r0', 'r0', '#5']
+  [Line  23] Address 0x302A: add (size: 2 bytes)
+  [Line  24] Tokenize: '	add r0, r0, #6'
+    -> Tokens: ['add', 'r0', 'r0', '#6']
+  [Line  24] Address 0x302C: add (size: 2 bytes)
+  [Line  25] Tokenize: '	add r0, r0, #7'
+    -> Tokens: ['add', 'r0', 'r0', '#7']
+  [Line  25] Address 0x302E: add (size: 2 bytes)
+  [Line  26] Tokenize: '	add r0, r0, #8'
+    -> Tokens: ['add', 'r0', 'r0', '#8']
+  [Line  26] Address 0x3030: add (size: 2 bytes)
+  [Line  27] Tokenize: '	add r0, r0, #9'
+    -> Tokens: ['add', 'r0', 'r0', '#9']
+  [Line  27] Address 0x3032: add (size: 2 bytes)
+  [Line  28] Tokenize: '	add r0, r0, #10'
+    -> Tokens: ['add', 'r0', 'r0', '#10']
+  [Line  28] Address 0x3034: add (size: 2 bytes)
+  [Line  29] Tokenize: '	add r0, r0, #11'
+    -> Tokens: ['add', 'r0', 'r0', '#11']
+  [Line  29] Address 0x3036: add (size: 2 bytes)
+  [Line  30] Tokenize: '	add r0, r0, #12'
+    -> Tokens: ['add', 'r0', 'r0', '#12']
+  [Line  30] Address 0x3038: add (size: 2 bytes)
+  [Line  31] Tokenize: '	add r0, r0, #13'
+    -> Tokens: ['add', 'r0', 'r0', '#13']
+  [Line  31] Address 0x303A: add (size: 2 bytes)
+  [Line  32] Tokenize: '	add r0, r0, #14'
+    -> Tokens: ['add', 'r0', 'r0', '#14']
+  [Line  32] Address 0x303C: add (size: 2 bytes)
+  [Line  33] Tokenize: '	add r0, r0, #15'
+    -> Tokens: ['add', 'r0', 'r0', '#15']
+  [Line  33] Address 0x303E: add (size: 2 bytes)
+  [Line  34] Tokenize: '	.end'
+    -> Tokens: ['.end']
+  [Line  34] .END: End of assembly
+
+Symbol Table (0 symbols):
+Final address: 0x3040 (12352)
+==================================================
+
+=== PASS 2: Code Generation ===
+  [Line   1] Tokenize: '	.orig x3000'
+    -> Tokens: ['.orig', 'x3000']
+    -> Parse constant (hex): x3000 -> 12288 (0x3000)
+  [Line   1] Write .ORIG: 0x3000
+  [Line   2] Tokenize: '	add r0, r0, #-16'
+    -> Tokens: ['add', 'r0', 'r0', '#-16']
+  [Line   2] Address 0x3000: add ['r0', 'r0', '#-16']
+    -> Parse register: r0 -> R0
+    -> Parse register: r0 -> R0
+    -> Parse constant (decimal): #-16 -> -16 (0x-010)
+    -> ADD encoding (immediate): op=1, dr=R0, sr1=R0, imm5=16 -> 0x1030
+    -> Write: 0x1030 (binary: 0001000000110000)
+  [Line   3] Tokenize: '	add r0, r0, #-15'
+    -> Tokens: ['add', 'r0', 'r0', '#-15']
+  [Line   3] Address 0x3002: add ['r0', 'r0', '#-15']
+    -> Parse register: r0 -> R0
+    -> Parse register: r0 -> R0
+    -> Parse constant (decimal): #-15 -> -15 (0x-00F)
+    -> ADD encoding (immediate): op=1, dr=R0, sr1=R0, imm5=17 -> 0x1031
+    -> Write: 0x1031 (binary: 0001000000110001)
+  [Line   4] Tokenize: '	add r0, r0, #-14'
+    -> Tokens: ['add', 'r0', 'r0', '#-14']
+  [Line   4] Address 0x3004: add ['r0', 'r0', '#-14']
+    -> Parse register: r0 -> R0
+    -> Parse register: r0 -> R0
+    -> Parse constant (decimal): #-14 -> -14 (0x-00E)
+    -> ADD encoding (immediate): op=1, dr=R0, sr1=R0, imm5=18 -> 0x1032
+    -> Write: 0x1032 (binary: 0001000000110010)
+  [Line   5] Tokenize: '	add r0, r0, #-13'
+    -> Tokens: ['add', 'r0', 'r0', '#-13']
+  [Line   5] Address 0x3006: add ['r0', 'r0', '#-13']
+    -> Parse register: r0 -> R0
+    -> Parse register: r0 -> R0
+    -> Parse constant (decimal): #-13 -> -13 (0x-00D)
+    -> ADD encoding (immediate): op=1, dr=R0, sr1=R0, imm5=19 -> 0x1033
+    -> Write: 0x1033 (binary: 0001000000110011)
+  [Line   6] Tokenize: '	add r0, r0, #-12'
+    -> Tokens: ['add', 'r0', 'r0', '#-12']
+  [Line   6] Address 0x3008: add ['r0', 'r0', '#-12']
+    -> Parse register: r0 -> R0
+    -> Parse register: r0 -> R0
+    -> Parse constant (decimal): #-12 -> -12 (0x-00C)
+    -> ADD encoding (immediate): op=1, dr=R0, sr1=R0, imm5=20 -> 0x1034
+    -> Write: 0x1034 (binary: 0001000000110100)
+  [Line   7] Tokenize: '	add r0, r0, #-11'
+    -> Tokens: ['add', 'r0', 'r0', '#-11']
+  [Line   7] Address 0x300A: add ['r0', 'r0', '#-11']
+    -> Parse register: r0 -> R0
+    -> Parse register: r0 -> R0
+    -> Parse constant (decimal): #-11 -> -11 (0x-00B)
+    -> ADD encoding (immediate): op=1, dr=R0, sr1=R0, imm5=21 -> 0x1035
+    -> Write: 0x1035 (binary: 0001000000110101)
+  [Line   8] Tokenize: '	add r0, r0, #-10'
+    -> Tokens: ['add', 'r0', 'r0', '#-10']
+  [Line   8] Address 0x300C: add ['r0', 'r0', '#-10']
+    -> Parse register: r0 -> R0
+    -> Parse register: r0 -> R0
+    -> Parse constant (decimal): #-10 -> -10 (0x-00A)
+    -> ADD encoding (immediate): op=1, dr=R0, sr1=R0, imm5=22 -> 0x1036
+    -> Write: 0x1036 (binary: 0001000000110110)
+  [Line   9] Tokenize: '	add r0, r0, #-9'
+    -> Tokens: ['add', 'r0', 'r0', '#-9']
+  [Line   9] Address 0x300E: add ['r0', 'r0', '#-9']
+    -> Parse register: r0 -> R0
+    -> Parse register: r0 -> R0
+    -> Parse constant (decimal): #-9 -> -9 (0x-009)
+    -> ADD encoding (immediate): op=1, dr=R0, sr1=R0, imm5=23 -> 0x1037
+    -> Write: 0x1037 (binary: 0001000000110111)
+  [Line  10] Tokenize: '	add r0, r0, #-8'
+    -> Tokens: ['add', 'r0', 'r0', '#-8']
+  [Line  10] Address 0x3010: add ['r0', 'r0', '#-8']
+    -> Parse register: r0 -> R0
+    -> Parse register: r0 -> R0
+    -> Parse constant (decimal): #-8 -> -8 (0x-008)
+    -> ADD encoding (immediate): op=1, dr=R0, sr1=R0, imm5=24 -> 0x1038
+    -> Write: 0x1038 (binary: 0001000000111000)
+  [Line  11] Tokenize: '	add r0, r0, #-7'
+    -> Tokens: ['add', 'r0', 'r0', '#-7']
+  [Line  11] Address 0x3012: add ['r0', 'r0', '#-7']
+    -> Parse register: r0 -> R0
+    -> Parse register: r0 -> R0
+    -> Parse constant (decimal): #-7 -> -7 (0x-007)
+    -> ADD encoding (immediate): op=1, dr=R0, sr1=R0, imm5=25 -> 0x1039
+    -> Write: 0x1039 (binary: 0001000000111001)
+  [Line  12] Tokenize: '	add r0, r0, #-6'
+    -> Tokens: ['add', 'r0', 'r0', '#-6']
+  [Line  12] Address 0x3014: add ['r0', 'r0', '#-6']
+    -> Parse register: r0 -> R0
+    -> Parse register: r0 -> R0
+    -> Parse constant (decimal): #-6 -> -6 (0x-006)
+    -> ADD encoding (immediate): op=1, dr=R0, sr1=R0, imm5=26 -> 0x103A
+    -> Write: 0x103A (binary: 0001000000111010)
+  [Line  13] Tokenize: '	add r0, r0, #-5'
+    -> Tokens: ['add', 'r0', 'r0', '#-5']
+  [Line  13] Address 0x3016: add ['r0', 'r0', '#-5']
+    -> Parse register: r0 -> R0
+    -> Parse register: r0 -> R0
+    -> Parse constant (decimal): #-5 -> -5 (0x-005)
+    -> ADD encoding (immediate): op=1, dr=R0, sr1=R0, imm5=27 -> 0x103B
+    -> Write: 0x103B (binary: 0001000000111011)
+  [Line  14] Tokenize: '	add r0, r0, #-4'
+    -> Tokens: ['add', 'r0', 'r0', '#-4']
+  [Line  14] Address 0x3018: add ['r0', 'r0', '#-4']
+    -> Parse register: r0 -> R0
+    -> Parse register: r0 -> R0
+    -> Parse constant (decimal): #-4 -> -4 (0x-004)
+    -> ADD encoding (immediate): op=1, dr=R0, sr1=R0, imm5=28 -> 0x103C
+    -> Write: 0x103C (binary: 0001000000111100)
+  [Line  15] Tokenize: '	add r0, r0, #-3'
+    -> Tokens: ['add', 'r0', 'r0', '#-3']
+  [Line  15] Address 0x301A: add ['r0', 'r0', '#-3']
+    -> Parse register: r0 -> R0
+    -> Parse register: r0 -> R0
+    -> Parse constant (decimal): #-3 -> -3 (0x-003)
+    -> ADD encoding (immediate): op=1, dr=R0, sr1=R0, imm5=29 -> 0x103D
+    -> Write: 0x103D (binary: 0001000000111101)
+  [Line  16] Tokenize: '	add r0, r0, #-2'
+    -> Tokens: ['add', 'r0', 'r0', '#-2']
+  [Line  16] Address 0x301C: add ['r0', 'r0', '#-2']
+    -> Parse register: r0 -> R0
+    -> Parse register: r0 -> R0
+    -> Parse constant (decimal): #-2 -> -2 (0x-002)
+    -> ADD encoding (immediate): op=1, dr=R0, sr1=R0, imm5=30 -> 0x103E
+    -> Write: 0x103E (binary: 0001000000111110)
+  [Line  17] Tokenize: '	add r0, r0, #-1'
+    -> Tokens: ['add', 'r0', 'r0', '#-1']
+  [Line  17] Address 0x301E: add ['r0', 'r0', '#-1']
+    -> Parse register: r0 -> R0
+    -> Parse register: r0 -> R0
+    -> Parse constant (decimal): #-1 -> -1 (0x-001)
+    -> ADD encoding (immediate): op=1, dr=R0, sr1=R0, imm5=31 -> 0x103F
+    -> Write: 0x103F (binary: 0001000000111111)
+  [Line  18] Tokenize: '	add r0, r0, #0'
+    -> Tokens: ['add', 'r0', 'r0', '#0']
+  [Line  18] Address 0x3020: add ['r0', 'r0', '#0']
+    -> Parse register: r0 -> R0
+    -> Parse register: r0 -> R0
+    -> Parse constant (decimal): #0 -> 0 (0x0000)
+    -> ADD encoding (immediate): op=1, dr=R0, sr1=R0, imm5=0 -> 0x1020
+    -> Write: 0x1020 (binary: 0001000000100000)
+  [Line  19] Tokenize: '	add r0, r0, #1'
+    -> Tokens: ['add', 'r0', 'r0', '#1']
+  [Line  19] Address 0x3022: add ['r0', 'r0', '#1']
+    -> Parse register: r0 -> R0
+    -> Parse register: r0 -> R0
+    -> Parse constant (decimal): #1 -> 1 (0x0001)
+    -> ADD encoding (immediate): op=1, dr=R0, sr1=R0, imm5=1 -> 0x1021
+    -> Write: 0x1021 (binary: 0001000000100001)
+  [Line  20] Tokenize: '	add r0, r0, #2'
+    -> Tokens: ['add', 'r0', 'r0', '#2']
+  [Line  20] Address 0x3024: add ['r0', 'r0', '#2']
+    -> Parse register: r0 -> R0
+    -> Parse register: r0 -> R0
+    -> Parse constant (decimal): #2 -> 2 (0x0002)
+    -> ADD encoding (immediate): op=1, dr=R0, sr1=R0, imm5=2 -> 0x1022
+    -> Write: 0x1022 (binary: 0001000000100010)
+  [Line  21] Tokenize: '	add r0, r0, #3'
+    -> Tokens: ['add', 'r0', 'r0', '#3']
+  [Line  21] Address 0x3026: add ['r0', 'r0', '#3']
+    -> Parse register: r0 -> R0
+    -> Parse register: r0 -> R0
+    -> Parse constant (decimal): #3 -> 3 (0x0003)
+    -> ADD encoding (immediate): op=1, dr=R0, sr1=R0, imm5=3 -> 0x1023
+    -> Write: 0x1023 (binary: 0001000000100011)
+  [Line  22] Tokenize: '	add r0, r0, #4'
+    -> Tokens: ['add', 'r0', 'r0', '#4']
+  [Line  22] Address 0x3028: add ['r0', 'r0', '#4']
+    -> Parse register: r0 -> R0
+    -> Parse register: r0 -> R0
+    -> Parse constant (decimal): #4 -> 4 (0x0004)
+    -> ADD encoding (immediate): op=1, dr=R0, sr1=R0, imm5=4 -> 0x1024
+    -> Write: 0x1024 (binary: 0001000000100100)
+  [Line  23] Tokenize: '	add r0, r0, #5'
+    -> Tokens: ['add', 'r0', 'r0', '#5']
+  [Line  23] Address 0x302A: add ['r0', 'r0', '#5']
+    -> Parse register: r0 -> R0
+    -> Parse register: r0 -> R0
+    -> Parse constant (decimal): #5 -> 5 (0x0005)
+    -> ADD encoding (immediate): op=1, dr=R0, sr1=R0, imm5=5 -> 0x1025
+    -> Write: 0x1025 (binary: 0001000000100101)
+  [Line  24] Tokenize: '	add r0, r0, #6'
+    -> Tokens: ['add', 'r0', 'r0', '#6']
+  [Line  24] Address 0x302C: add ['r0', 'r0', '#6']
+    -> Parse register: r0 -> R0
+    -> Parse register: r0 -> R0
+    -> Parse constant (decimal): #6 -> 6 (0x0006)
+    -> ADD encoding (immediate): op=1, dr=R0, sr1=R0, imm5=6 -> 0x1026
+    -> Write: 0x1026 (binary: 0001000000100110)
+  [Line  25] Tokenize: '	add r0, r0, #7'
+    -> Tokens: ['add', 'r0', 'r0', '#7']
+  [Line  25] Address 0x302E: add ['r0', 'r0', '#7']
+    -> Parse register: r0 -> R0
+    -> Parse register: r0 -> R0
+    -> Parse constant (decimal): #7 -> 7 (0x0007)
+    -> ADD encoding (immediate): op=1, dr=R0, sr1=R0, imm5=7 -> 0x1027
+    -> Write: 0x1027 (binary: 0001000000100111)
+  [Line  26] Tokenize: '	add r0, r0, #8'
+    -> Tokens: ['add', 'r0', 'r0', '#8']
+  [Line  26] Address 0x3030: add ['r0', 'r0', '#8']
+    -> Parse register: r0 -> R0
+    -> Parse register: r0 -> R0
+    -> Parse constant (decimal): #8 -> 8 (0x0008)
+    -> ADD encoding (immediate): op=1, dr=R0, sr1=R0, imm5=8 -> 0x1028
+    -> Write: 0x1028 (binary: 0001000000101000)
+  [Line  27] Tokenize: '	add r0, r0, #9'
+    -> Tokens: ['add', 'r0', 'r0', '#9']
+  [Line  27] Address 0x3032: add ['r0', 'r0', '#9']
+    -> Parse register: r0 -> R0
+    -> Parse register: r0 -> R0
+    -> Parse constant (decimal): #9 -> 9 (0x0009)
+    -> ADD encoding (immediate): op=1, dr=R0, sr1=R0, imm5=9 -> 0x1029
+    -> Write: 0x1029 (binary: 0001000000101001)
+  [Line  28] Tokenize: '	add r0, r0, #10'
+    -> Tokens: ['add', 'r0', 'r0', '#10']
+  [Line  28] Address 0x3034: add ['r0', 'r0', '#10']
+    -> Parse register: r0 -> R0
+    -> Parse register: r0 -> R0
+    -> Parse constant (decimal): #10 -> 10 (0x000A)
+    -> ADD encoding (immediate): op=1, dr=R0, sr1=R0, imm5=10 -> 0x102A
+    -> Write: 0x102A (binary: 0001000000101010)
+  [Line  29] Tokenize: '	add r0, r0, #11'
+    -> Tokens: ['add', 'r0', 'r0', '#11']
+  [Line  29] Address 0x3036: add ['r0', 'r0', '#11']
+    -> Parse register: r0 -> R0
+    -> Parse register: r0 -> R0
+    -> Parse constant (decimal): #11 -> 11 (0x000B)
+    -> ADD encoding (immediate): op=1, dr=R0, sr1=R0, imm5=11 -> 0x102B
+    -> Write: 0x102B (binary: 0001000000101011)
+  [Line  30] Tokenize: '	add r0, r0, #12'
+    -> Tokens: ['add', 'r0', 'r0', '#12']
+  [Line  30] Address 0x3038: add ['r0', 'r0', '#12']
+    -> Parse register: r0 -> R0
+    -> Parse register: r0 -> R0
+    -> Parse constant (decimal): #12 -> 12 (0x000C)
+    -> ADD encoding (immediate): op=1, dr=R0, sr1=R0, imm5=12 -> 0x102C
+    -> Write: 0x102C (binary: 0001000000101100)
+  [Line  31] Tokenize: '	add r0, r0, #13'
+    -> Tokens: ['add', 'r0', 'r0', '#13']
+  [Line  31] Address 0x303A: add ['r0', 'r0', '#13']
+    -> Parse register: r0 -> R0
+    -> Parse register: r0 -> R0
+    -> Parse constant (decimal): #13 -> 13 (0x000D)
+    -> ADD encoding (immediate): op=1, dr=R0, sr1=R0, imm5=13 -> 0x102D
+    -> Write: 0x102D (binary: 0001000000101101)
+  [Line  32] Tokenize: '	add r0, r0, #14'
+    -> Tokens: ['add', 'r0', 'r0', '#14']
+  [Line  32] Address 0x303C: add ['r0', 'r0', '#14']
+    -> Parse register: r0 -> R0
+    -> Parse register: r0 -> R0
+    -> Parse constant (decimal): #14 -> 14 (0x000E)
+    -> ADD encoding (immediate): op=1, dr=R0, sr1=R0, imm5=14 -> 0x102E
+    -> Write: 0x102E (binary: 0001000000101110)
+  [Line  33] Tokenize: '	add r0, r0, #15'
+    -> Tokens: ['add', 'r0', 'r0', '#15']
+  [Line  33] Address 0x303E: add ['r0', 'r0', '#15']
+    -> Parse register: r0 -> R0
+    -> Parse register: r0 -> R0
+    -> Parse constant (decimal): #15 -> 15 (0x000F)
+    -> ADD encoding (immediate): op=1, dr=R0, sr1=R0, imm5=15 -> 0x102F
+    -> Write: 0x102F (binary: 0001000000101111)
+  [Line  34] Tokenize: '	.end'
+    -> Tokens: ['.end']
+  [Line  34] .END: Stopping assembly
+
+============================================================
+Assembly complete: program/test_imm5.asm -> results/test_imm5.obj
+Debug log saved to: /Users/wonjoonyun/Library/CloudStorage/OneDrive-TheUniversityofTexasatAustin/01_lecture/Computer_Architecture_Example/1_Opcode/debug/test_imm5.asm.debug
+============================================================
+

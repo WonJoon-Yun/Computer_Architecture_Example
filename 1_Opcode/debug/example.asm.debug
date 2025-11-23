@@ -1,0 +1,53 @@
+
+============================================================
+Assembling: program/example.asm
+Output: results/example.obj
+Debug log: /Users/wonjoonyun/Library/CloudStorage/OneDrive-TheUniversityofTexasatAustin/01_lecture/Computer_Architecture_Example/1_Opcode/debug/example.asm.debug
+============================================================
+
+=== PASS 1: Building Symbol Table ===
+  [Line   1] Tokenize: '   .orig x3000'
+    -> Tokens: ['.orig', 'x3000']
+    -> Parse constant (hex): x3000 -> 12288 (0x3000)
+  [Line   1] .ORIG: Starting address = 0x3000 (12288)
+  [Line   2] Tokenize: '   and r0, r0, #0'
+    -> Tokens: ['and', 'r0', 'r0', '#0']
+  [Line   2] Address 0x3000: and (size: 2 bytes)
+  [Line   3] Tokenize: '   halt'
+    -> Tokens: ['halt']
+  [Line   3] Address 0x3002: halt (size: 2 bytes)
+  [Line   4] Tokenize: '   .end'
+    -> Tokens: ['.end']
+  [Line   4] .END: End of assembly
+
+Symbol Table (0 symbols):
+Final address: 0x3004 (12292)
+==================================================
+
+=== PASS 2: Code Generation ===
+  [Line   1] Tokenize: '   .orig x3000'
+    -> Tokens: ['.orig', 'x3000']
+    -> Parse constant (hex): x3000 -> 12288 (0x3000)
+  [Line   1] Write .ORIG: 0x3000
+  [Line   2] Tokenize: '   and r0, r0, #0'
+    -> Tokens: ['and', 'r0', 'r0', '#0']
+  [Line   2] Address 0x3000: and ['r0', 'r0', '#0']
+    -> Parse register: r0 -> R0
+    -> Parse register: r0 -> R0
+    -> Parse constant (decimal): #0 -> 0 (0x0000)
+    -> AND encoding (immediate): op=5, dr=R0, sr1=R0, imm5=0 -> 0x5020
+    -> Write: 0x5020 (binary: 0101000000100000)
+  [Line   3] Tokenize: '   halt'
+    -> Tokens: ['halt']
+  [Line   3] Address 0x3002: halt []
+    -> HALT encoding: -> 0xF025
+    -> Write: 0xF025 (binary: 1111000000100101)
+  [Line   4] Tokenize: '   .end'
+    -> Tokens: ['.end']
+  [Line   4] .END: Stopping assembly
+
+============================================================
+Assembly complete: program/example.asm -> results/example.obj
+Debug log saved to: /Users/wonjoonyun/Library/CloudStorage/OneDrive-TheUniversityofTexasatAustin/01_lecture/Computer_Architecture_Example/1_Opcode/debug/example.asm.debug
+============================================================
+

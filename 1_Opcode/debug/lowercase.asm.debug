@@ -1,0 +1,394 @@
+
+============================================================
+Assembling: program/lowercase.asm
+Output: results/lowercase.obj
+Debug log: /Users/wonjoonyun/Library/CloudStorage/OneDrive-TheUniversityofTexasatAustin/01_lecture/Computer_Architecture_Example/1_Opcode/debug/lowercase.asm.debug
+============================================================
+
+=== PASS 1: Building Symbol Table ===
+  [Line   5] Tokenize: '             .orig x3000'
+    -> Tokens: ['.orig', 'x3000']
+    -> Parse constant (hex): x3000 -> 12288 (0x3000)
+  [Line   5] .ORIG: Starting address = 0x3000 (12288)
+  [Line   6] Tokenize: '             lea r0, instr'
+    -> Tokens: ['lea', 'r0', 'instr']
+  [Line   6] Address 0x3000: lea (size: 2 bytes)
+  [Line   7] Tokenize: '             ldw r0, r0, #0'
+    -> Tokens: ['ldw', 'r0', 'r0', '#0']
+  [Line   7] Address 0x3002: ldw (size: 2 bytes)
+  [Line   8] Tokenize: '             ldw r0, r0, #0 ; r0=in'
+    -> Tokens: ['ldw', 'r0', 'r0', '#0']
+    -> Comment: 'r0=in'
+  [Line   8] Address 0x3004: ldw (size: 2 bytes)
+  [Line   9] Tokenize: '             lea r2, outstr'
+    -> Tokens: ['lea', 'r2', 'outstr']
+  [Line   9] Address 0x3006: lea (size: 2 bytes)
+  [Line  10] Tokenize: '	     ldw r2, r2, #0'
+    -> Tokens: ['ldw', 'r2', 'r2', '#0']
+  [Line  10] Address 0x3008: ldw (size: 2 bytes)
+  [Line  11] Tokenize: '	     ldw r2, r2, #0 ; r2=out'
+    -> Tokens: ['ldw', 'r2', 'r2', '#0']
+    -> Comment: 'r2=out'
+  [Line  11] Address 0x300A: ldw (size: 2 bytes)
+  [Line  12] Tokenize: '             lea r5, smalla ; r5=-'a''
+    -> Tokens: ['lea', 'r5', 'smalla']
+    -> Comment: 'r5=-'a''
+  [Line  12] Address 0x300C: lea (size: 2 bytes)
+  [Line  13] Tokenize: '             ldw r5, r5, #0'
+    -> Tokens: ['ldw', 'r5', 'r5', '#0']
+  [Line  13] Address 0x300E: ldw (size: 2 bytes)
+  [Line  14] Tokenize: '             lea r6, atoz   ; r6='a'-'z''
+    -> Tokens: ['lea', 'r6', 'atoz']
+    -> Comment: 'r6='a'-'z''
+  [Line  14] Address 0x3010: lea (size: 2 bytes)
+  [Line  15] Tokenize: '             ldw r6, r6, #0'
+    -> Tokens: ['ldw', 'r6', 'r6', '#0']
+  [Line  15] Address 0x3012: ldw (size: 2 bytes)
+  [Line  16] Tokenize: '             lea r7, biga   ; r7='a''
+    -> Tokens: ['lea', 'r7', 'biga']
+    -> Comment: 'r7='a''
+  [Line  16] Address 0x3014: lea (size: 2 bytes)
+  [Line  17] Tokenize: '             ldw r7, r7, #0'
+    -> Tokens: ['ldw', 'r7', 'r7', '#0']
+  [Line  17] Address 0x3016: ldw (size: 2 bytes)
+  [Line  18] Tokenize: 'loop         ldw r1, r0, #0 ; r1=*in=inchar'
+    -> Tokens: ['loop', 'ldw', 'r1', 'r0', '#0']
+    -> Comment: 'r1=*in=inchar'
+  [Line  18] Label 'loop' -> 0x3018 (12312)
+  [Line  18] Address 0x3018: ldw (size: 2 bytes)
+  [Line  19] Tokenize: '             brz done       ; if inchar='\0''
+    -> Tokens: ['brz', 'done']
+    -> Comment: 'if inchar='\0''
+  [Line  19] Address 0x301A: brz (size: 2 bytes)
+  [Line  20] Tokenize: '             add r4, r1, r5 ; r4=inchar-'a'=c'
+    -> Tokens: ['add', 'r4', 'r1', 'r5']
+    -> Comment: 'r4=inchar-'a'=c'
+  [Line  20] Address 0x301C: add (size: 2 bytes)
+  [Line  21] Tokenize: '             brn nochange   ; if c < 'a''
+    -> Tokens: ['brn', 'nochange']
+    -> Comment: 'if c < 'a''
+  [Line  21] Address 0x301E: brn (size: 2 bytes)
+  [Line  22] Tokenize: '             add r3, r4, r6 ; r3 = c-25'
+    -> Tokens: ['add', 'r3', 'r4', 'r6']
+    -> Comment: 'r3 = c-25'
+  [Line  22] Address 0x3020: add (size: 2 bytes)
+  [Line  23] Tokenize: '             brp nochange   ; if c > 'z''
+    -> Tokens: ['brp', 'nochange']
+    -> Comment: 'if c > 'z''
+  [Line  23] Address 0x3022: brp (size: 2 bytes)
+  [Line  24] Tokenize: '             add r1, r4, r7 ; inchar=c+'a''
+    -> Tokens: ['add', 'r1', 'r4', 'r7']
+    -> Comment: 'inchar=c+'a''
+  [Line  24] Address 0x3024: add (size: 2 bytes)
+  [Line  25] Tokenize: 'nochange     stw r1, r2, #0 ; *outstr=r1'
+    -> Tokens: ['nochange', 'stw', 'r1', 'r2', '#0']
+    -> Comment: '*outstr=r1'
+  [Line  25] Label 'nochange' -> 0x3026 (12326)
+  [Line  25] Address 0x3026: stw (size: 2 bytes)
+  [Line  26] Tokenize: '			 add r0, r0, #2'
+    -> Tokens: ['add', 'r0', 'r0', '#2']
+  [Line  26] Address 0x3028: add (size: 2 bytes)
+  [Line  27] Tokenize: '             add r2, r2, #2'
+    -> Tokens: ['add', 'r2', 'r2', '#2']
+  [Line  27] Address 0x302A: add (size: 2 bytes)
+  [Line  28] Tokenize: '             br  loop'
+    -> Tokens: ['br', 'loop']
+  [Line  28] Address 0x302C: br (size: 2 bytes)
+  [Line  30] Tokenize: 'done         stw r1, r2, #0 ; *outstr=r1'
+    -> Tokens: ['done', 'stw', 'r1', 'r2', '#0']
+    -> Comment: '*outstr=r1'
+  [Line  30] Label 'done' -> 0x302E (12334)
+  [Line  30] Address 0x302E: stw (size: 2 bytes)
+  [Line  31] Tokenize: '             halt'
+    -> Tokens: ['halt']
+  [Line  31] Address 0x3030: halt (size: 2 bytes)
+  [Line  33] Tokenize: 'instr        .fill x4000'
+    -> Tokens: ['instr', '.fill', 'x4000']
+  [Line  33] Label 'instr' -> 0x3032 (12338)
+  [Line  33] Address 0x3032: .fill (size: 2 bytes)
+  [Line  34] Tokenize: 'outstr       .fill x4002'
+    -> Tokens: ['outstr', '.fill', 'x4002']
+  [Line  34] Label 'outstr' -> 0x3034 (12340)
+  [Line  34] Address 0x3034: .fill (size: 2 bytes)
+  [Line  35] Tokenize: 'smalla       .fill xff9f ; -'a''
+    -> Tokens: ['smalla', '.fill', 'xff9f']
+    -> Comment: '-'a''
+  [Line  35] Label 'smalla' -> 0x3036 (12342)
+  [Line  35] Address 0x3036: .fill (size: 2 bytes)
+  [Line  36] Tokenize: 'atoz         .fill #-25'
+    -> Tokens: ['atoz', '.fill', '#-25']
+  [Line  36] Label 'atoz' -> 0x3038 (12344)
+  [Line  36] Address 0x3038: .fill (size: 2 bytes)
+  [Line  37] Tokenize: 'biga         .fill x0041 ; 'a''
+    -> Tokens: ['biga', '.fill', 'x0041']
+    -> Comment: ''a''
+  [Line  37] Label 'biga' -> 0x303A (12346)
+  [Line  37] Address 0x303A: .fill (size: 2 bytes)
+  [Line  38] Tokenize: '             .end'
+    -> Tokens: ['.end']
+  [Line  38] .END: End of assembly
+
+Symbol Table (8 symbols):
+  atoz                 -> 0x3038 (12344)
+  biga                 -> 0x303A (12346)
+  done                 -> 0x302E (12334)
+  instr                -> 0x3032 (12338)
+  loop                 -> 0x3018 (12312)
+  nochange             -> 0x3026 (12326)
+  outstr               -> 0x3034 (12340)
+  smalla               -> 0x3036 (12342)
+Final address: 0x303C (12348)
+==================================================
+
+=== PASS 2: Code Generation ===
+  [Line   5] Tokenize: '             .orig x3000'
+    -> Tokens: ['.orig', 'x3000']
+    -> Parse constant (hex): x3000 -> 12288 (0x3000)
+  [Line   5] Write .ORIG: 0x3000
+  [Line   6] Tokenize: '             lea r0, instr'
+    -> Tokens: ['lea', 'r0', 'instr']
+  [Line   6] Address 0x3000: lea ['r0', 'instr']
+    -> Parse register: r0 -> R0
+    -> LEA target: Symbol 'instr' -> 0x3032
+    -> PC offset: target=0x3032, current=0x3000, offset=24 (9 bits)
+    -> Masked offset: 0x0018 (binary: 000011000)
+    -> LEA encoding: dr=R0, offset=24 -> 0xE018
+    -> Write: 0xE018 (binary: 1110000000011000)
+  [Line   7] Tokenize: '             ldw r0, r0, #0'
+    -> Tokens: ['ldw', 'r0', 'r0', '#0']
+  [Line   7] Address 0x3002: ldw ['r0', 'r0', '#0']
+    -> Parse register: r0 -> R0
+    -> Parse register: r0 -> R0
+    -> Parse constant (decimal): #0 -> 0 (0x0000)
+    -> Write: 0x6000 (binary: 0110000000000000)
+  [Line   8] Tokenize: '             ldw r0, r0, #0 ; r0=in'
+    -> Tokens: ['ldw', 'r0', 'r0', '#0']
+    -> Comment: 'r0=in'
+  [Line   8] Address 0x3004: ldw ['r0', 'r0', '#0']
+    -> Parse register: r0 -> R0
+    -> Parse register: r0 -> R0
+    -> Parse constant (decimal): #0 -> 0 (0x0000)
+    -> Write: 0x6000 (binary: 0110000000000000)
+  [Line   9] Tokenize: '             lea r2, outstr'
+    -> Tokens: ['lea', 'r2', 'outstr']
+  [Line   9] Address 0x3006: lea ['r2', 'outstr']
+    -> Parse register: r2 -> R2
+    -> LEA target: Symbol 'outstr' -> 0x3034
+    -> PC offset: target=0x3034, current=0x3006, offset=22 (9 bits)
+    -> Masked offset: 0x0016 (binary: 000010110)
+    -> LEA encoding: dr=R2, offset=22 -> 0xE416
+    -> Write: 0xE416 (binary: 1110010000010110)
+  [Line  10] Tokenize: '	     ldw r2, r2, #0'
+    -> Tokens: ['ldw', 'r2', 'r2', '#0']
+  [Line  10] Address 0x3008: ldw ['r2', 'r2', '#0']
+    -> Parse register: r2 -> R2
+    -> Parse register: r2 -> R2
+    -> Parse constant (decimal): #0 -> 0 (0x0000)
+    -> Write: 0x6480 (binary: 0110010010000000)
+  [Line  11] Tokenize: '	     ldw r2, r2, #0 ; r2=out'
+    -> Tokens: ['ldw', 'r2', 'r2', '#0']
+    -> Comment: 'r2=out'
+  [Line  11] Address 0x300A: ldw ['r2', 'r2', '#0']
+    -> Parse register: r2 -> R2
+    -> Parse register: r2 -> R2
+    -> Parse constant (decimal): #0 -> 0 (0x0000)
+    -> Write: 0x6480 (binary: 0110010010000000)
+  [Line  12] Tokenize: '             lea r5, smalla ; r5=-'a''
+    -> Tokens: ['lea', 'r5', 'smalla']
+    -> Comment: 'r5=-'a''
+  [Line  12] Address 0x300C: lea ['r5', 'smalla']
+    -> Parse register: r5 -> R5
+    -> LEA target: Symbol 'smalla' -> 0x3036
+    -> PC offset: target=0x3036, current=0x300C, offset=20 (9 bits)
+    -> Masked offset: 0x0014 (binary: 000010100)
+    -> LEA encoding: dr=R5, offset=20 -> 0xEA14
+    -> Write: 0xEA14 (binary: 1110101000010100)
+  [Line  13] Tokenize: '             ldw r5, r5, #0'
+    -> Tokens: ['ldw', 'r5', 'r5', '#0']
+  [Line  13] Address 0x300E: ldw ['r5', 'r5', '#0']
+    -> Parse register: r5 -> R5
+    -> Parse register: r5 -> R5
+    -> Parse constant (decimal): #0 -> 0 (0x0000)
+    -> Write: 0x6B40 (binary: 0110101101000000)
+  [Line  14] Tokenize: '             lea r6, atoz   ; r6='a'-'z''
+    -> Tokens: ['lea', 'r6', 'atoz']
+    -> Comment: 'r6='a'-'z''
+  [Line  14] Address 0x3010: lea ['r6', 'atoz']
+    -> Parse register: r6 -> R6
+    -> LEA target: Symbol 'atoz' -> 0x3038
+    -> PC offset: target=0x3038, current=0x3010, offset=19 (9 bits)
+    -> Masked offset: 0x0013 (binary: 000010011)
+    -> LEA encoding: dr=R6, offset=19 -> 0xEC13
+    -> Write: 0xEC13 (binary: 1110110000010011)
+  [Line  15] Tokenize: '             ldw r6, r6, #0'
+    -> Tokens: ['ldw', 'r6', 'r6', '#0']
+  [Line  15] Address 0x3012: ldw ['r6', 'r6', '#0']
+    -> Parse register: r6 -> R6
+    -> Parse register: r6 -> R6
+    -> Parse constant (decimal): #0 -> 0 (0x0000)
+    -> Write: 0x6D80 (binary: 0110110110000000)
+  [Line  16] Tokenize: '             lea r7, biga   ; r7='a''
+    -> Tokens: ['lea', 'r7', 'biga']
+    -> Comment: 'r7='a''
+  [Line  16] Address 0x3014: lea ['r7', 'biga']
+    -> Parse register: r7 -> R7
+    -> LEA target: Symbol 'biga' -> 0x303A
+    -> PC offset: target=0x303A, current=0x3014, offset=18 (9 bits)
+    -> Masked offset: 0x0012 (binary: 000010010)
+    -> LEA encoding: dr=R7, offset=18 -> 0xEE12
+    -> Write: 0xEE12 (binary: 1110111000010010)
+  [Line  17] Tokenize: '             ldw r7, r7, #0'
+    -> Tokens: ['ldw', 'r7', 'r7', '#0']
+  [Line  17] Address 0x3016: ldw ['r7', 'r7', '#0']
+    -> Parse register: r7 -> R7
+    -> Parse register: r7 -> R7
+    -> Parse constant (decimal): #0 -> 0 (0x0000)
+    -> Write: 0x6FC0 (binary: 0110111111000000)
+  [Line  18] Tokenize: 'loop         ldw r1, r0, #0 ; r1=*in=inchar'
+    -> Tokens: ['loop', 'ldw', 'r1', 'r0', '#0']
+    -> Comment: 'r1=*in=inchar'
+  [Line  18] Address 0x3018: ldw ['r1', 'r0', '#0']
+    -> Parse register: r1 -> R1
+    -> Parse register: r0 -> R0
+    -> Parse constant (decimal): #0 -> 0 (0x0000)
+    -> Write: 0x6200 (binary: 0110001000000000)
+  [Line  19] Tokenize: '             brz done       ; if inchar='\0''
+    -> Tokens: ['brz', 'done']
+    -> Comment: 'if inchar='\0''
+  [Line  19] Address 0x301A: brz ['done']
+    -> BR target: Symbol 'done' -> 0x302E
+    -> PC offset: target=0x302E, current=0x301A, offset=9 (9 bits)
+    -> Masked offset: 0x0009 (binary: 000001001)
+    -> BR encoding: n=0, z=1, p=0, offset=9 -> 0x0409 (0000010000001001)
+    -> Write: 0x0409 (binary: 0000010000001001)
+  [Line  20] Tokenize: '             add r4, r1, r5 ; r4=inchar-'a'=c'
+    -> Tokens: ['add', 'r4', 'r1', 'r5']
+    -> Comment: 'r4=inchar-'a'=c'
+  [Line  20] Address 0x301C: add ['r4', 'r1', 'r5']
+    -> Parse register: r4 -> R4
+    -> Parse register: r1 -> R1
+    -> Parse register: r5 -> R5
+    -> ADD encoding (register): op=1, dr=R4, sr1=R1, sr2=R5 -> 0x1845
+    -> Write: 0x1845 (binary: 0001100001000101)
+  [Line  21] Tokenize: '             brn nochange   ; if c < 'a''
+    -> Tokens: ['brn', 'nochange']
+    -> Comment: 'if c < 'a''
+  [Line  21] Address 0x301E: brn ['nochange']
+    -> BR target: Symbol 'nochange' -> 0x3026
+    -> PC offset: target=0x3026, current=0x301E, offset=3 (9 bits)
+    -> Masked offset: 0x0003 (binary: 000000011)
+    -> BR encoding: n=1, z=0, p=0, offset=3 -> 0x0803 (0000100000000011)
+    -> Write: 0x0803 (binary: 0000100000000011)
+  [Line  22] Tokenize: '             add r3, r4, r6 ; r3 = c-25'
+    -> Tokens: ['add', 'r3', 'r4', 'r6']
+    -> Comment: 'r3 = c-25'
+  [Line  22] Address 0x3020: add ['r3', 'r4', 'r6']
+    -> Parse register: r3 -> R3
+    -> Parse register: r4 -> R4
+    -> Parse register: r6 -> R6
+    -> ADD encoding (register): op=1, dr=R3, sr1=R4, sr2=R6 -> 0x1706
+    -> Write: 0x1706 (binary: 0001011100000110)
+  [Line  23] Tokenize: '             brp nochange   ; if c > 'z''
+    -> Tokens: ['brp', 'nochange']
+    -> Comment: 'if c > 'z''
+  [Line  23] Address 0x3022: brp ['nochange']
+    -> BR target: Symbol 'nochange' -> 0x3026
+    -> PC offset: target=0x3026, current=0x3022, offset=1 (9 bits)
+    -> Masked offset: 0x0001 (binary: 000000001)
+    -> BR encoding: n=0, z=0, p=1, offset=1 -> 0x0201 (0000001000000001)
+    -> Write: 0x0201 (binary: 0000001000000001)
+  [Line  24] Tokenize: '             add r1, r4, r7 ; inchar=c+'a''
+    -> Tokens: ['add', 'r1', 'r4', 'r7']
+    -> Comment: 'inchar=c+'a''
+  [Line  24] Address 0x3024: add ['r1', 'r4', 'r7']
+    -> Parse register: r1 -> R1
+    -> Parse register: r4 -> R4
+    -> Parse register: r7 -> R7
+    -> ADD encoding (register): op=1, dr=R1, sr1=R4, sr2=R7 -> 0x1307
+    -> Write: 0x1307 (binary: 0001001100000111)
+  [Line  25] Tokenize: 'nochange     stw r1, r2, #0 ; *outstr=r1'
+    -> Tokens: ['nochange', 'stw', 'r1', 'r2', '#0']
+    -> Comment: '*outstr=r1'
+  [Line  25] Address 0x3026: stw ['r1', 'r2', '#0']
+    -> Parse register: r1 -> R1
+    -> Parse register: r2 -> R2
+    -> Parse constant (decimal): #0 -> 0 (0x0000)
+    -> Write: 0x7280 (binary: 0111001010000000)
+  [Line  26] Tokenize: '			 add r0, r0, #2'
+    -> Tokens: ['add', 'r0', 'r0', '#2']
+  [Line  26] Address 0x3028: add ['r0', 'r0', '#2']
+    -> Parse register: r0 -> R0
+    -> Parse register: r0 -> R0
+    -> Parse constant (decimal): #2 -> 2 (0x0002)
+    -> ADD encoding (immediate): op=1, dr=R0, sr1=R0, imm5=2 -> 0x1022
+    -> Write: 0x1022 (binary: 0001000000100010)
+  [Line  27] Tokenize: '             add r2, r2, #2'
+    -> Tokens: ['add', 'r2', 'r2', '#2']
+  [Line  27] Address 0x302A: add ['r2', 'r2', '#2']
+    -> Parse register: r2 -> R2
+    -> Parse register: r2 -> R2
+    -> Parse constant (decimal): #2 -> 2 (0x0002)
+    -> ADD encoding (immediate): op=1, dr=R2, sr1=R2, imm5=2 -> 0x14A2
+    -> Write: 0x14A2 (binary: 0001010010100010)
+  [Line  28] Tokenize: '             br  loop'
+    -> Tokens: ['br', 'loop']
+  [Line  28] Address 0x302C: br ['loop']
+    -> BR target: Symbol 'loop' -> 0x3018
+    -> PC offset: target=0x3018, current=0x302C, offset=-11 (9 bits)
+    -> Masked offset: 0x01F5 (binary: 111110101)
+    -> BR encoding: n=1, z=1, p=1, offset=501 -> 0x0FF5 (0000111111110101)
+    -> Write: 0x0FF5 (binary: 0000111111110101)
+  [Line  30] Tokenize: 'done         stw r1, r2, #0 ; *outstr=r1'
+    -> Tokens: ['done', 'stw', 'r1', 'r2', '#0']
+    -> Comment: '*outstr=r1'
+  [Line  30] Address 0x302E: stw ['r1', 'r2', '#0']
+    -> Parse register: r1 -> R1
+    -> Parse register: r2 -> R2
+    -> Parse constant (decimal): #0 -> 0 (0x0000)
+    -> Write: 0x7280 (binary: 0111001010000000)
+  [Line  31] Tokenize: '             halt'
+    -> Tokens: ['halt']
+  [Line  31] Address 0x3030: halt []
+    -> HALT encoding: -> 0xF025
+    -> Write: 0xF025 (binary: 1111000000100101)
+  [Line  33] Tokenize: 'instr        .fill x4000'
+    -> Tokens: ['instr', '.fill', 'x4000']
+  [Line  33] Address 0x3032: .fill ['x4000']
+    -> Parse constant (hex): x4000 -> 16384 (0x4000)
+    -> .FILL encoding: 0x4000
+    -> Write: 0x4000 (binary: 0100000000000000)
+  [Line  34] Tokenize: 'outstr       .fill x4002'
+    -> Tokens: ['outstr', '.fill', 'x4002']
+  [Line  34] Address 0x3034: .fill ['x4002']
+    -> Parse constant (hex): x4002 -> 16386 (0x4002)
+    -> .FILL encoding: 0x4002
+    -> Write: 0x4002 (binary: 0100000000000010)
+  [Line  35] Tokenize: 'smalla       .fill xff9f ; -'a''
+    -> Tokens: ['smalla', '.fill', 'xff9f']
+    -> Comment: '-'a''
+  [Line  35] Address 0x3036: .fill ['xff9f']
+    -> Parse constant (hex): xff9f -> 65439 (0xFF9F)
+    -> .FILL encoding: 0xFF9F
+    -> Write: 0xFF9F (binary: 1111111110011111)
+  [Line  36] Tokenize: 'atoz         .fill #-25'
+    -> Tokens: ['atoz', '.fill', '#-25']
+  [Line  36] Address 0x3038: .fill ['#-25']
+    -> Parse constant (decimal): #-25 -> -25 (0x-019)
+    -> .FILL encoding: 0xFFE7
+    -> Write: 0xFFE7 (binary: 1111111111100111)
+  [Line  37] Tokenize: 'biga         .fill x0041 ; 'a''
+    -> Tokens: ['biga', '.fill', 'x0041']
+    -> Comment: ''a''
+  [Line  37] Address 0x303A: .fill ['x0041']
+    -> Parse constant (hex): x0041 -> 65 (0x0041)
+    -> .FILL encoding: 0x0041
+    -> Write: 0x0041 (binary: 0000000001000001)
+  [Line  38] Tokenize: '             .end'
+    -> Tokens: ['.end']
+  [Line  38] .END: Stopping assembly
+
+============================================================
+Assembly complete: program/lowercase.asm -> results/lowercase.obj
+Debug log saved to: /Users/wonjoonyun/Library/CloudStorage/OneDrive-TheUniversityofTexasatAustin/01_lecture/Computer_Architecture_Example/1_Opcode/debug/lowercase.asm.debug
+============================================================
+

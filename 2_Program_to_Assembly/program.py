@@ -1,3 +1,11 @@
+def sum_modulo_3(x):
+    result = 0
+    for i in range(x):
+        if i % 3 != 0:
+            result += i
+    return result 
+
+
 def dot_product(a, b):
     result = 0
     for i in range(len(a)):

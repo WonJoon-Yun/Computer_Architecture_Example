@@ -35,12 +35,30 @@ Final address: 0x3004 (12292)
     -> Parse register: r0 -> R0
     -> Parse register: r0 -> R0
     -> Parse constant (decimal): #0 -> 0 (0x0000)
-    -> AND encoding (immediate): op=5, dr=R0, sr1=R0, imm5=0 -> 0x5020
+    -> AND encoding (immediate mode):
+       Format: [0101][DR][SR1][1][imm5]
+       Opcode: 0101 (0x5) = 0x5000
+       Destination register: R0 = 0x0000
+       Source register 1: R0 = 0x0000
+       Mode bit: 1 (immediate mode) = 0x0020
+       Immediate value: 0 (5 bits, signed) = 0x00
+       Read register: R0
+       Write register: R0
+       Operation: R0 = R0 & 0
+       Encoding: 0x5000 | 0x0000 | 0x0000 | 0x0020 | 0x00 = 0x5020
+       Machine code: 0x5020 (0101000000100000)
     -> Write: 0x5020 (binary: 0101000000100000)
   [Line   3] Tokenize: '   halt'
     -> Tokens: ['halt']
   [Line   3] Address 0x3002: halt []
-    -> HALT encoding: -> 0xF025
+    -> HALT encoding (TRAP x25):
+       TRAP instruction format: [1111][trapvect8]
+       Opcode: 1111 (0xF) = 0xF000
+       Trap vector: x25 (0x25) = 0x0025
+       Encoding: 0xF000 | 0x0025 = 0xF025
+       Operation: System call to halt the program
+       Effect: Program execution stops, no return value
+       Machine code: 0xF025 (1111000000100101)
     -> Write: 0xF025 (binary: 1111000000100101)
   [Line   4] Tokenize: '   .end'
     -> Tokens: ['.end']

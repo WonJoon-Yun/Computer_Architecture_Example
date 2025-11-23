@@ -56,7 +56,16 @@ Final address: 0x3010 (12304)
     -> LEA target: Symbol 'a' -> 0x300E
     -> PC offset: target=0x300E, current=0x3000, offset=6 (9 bits)
     -> Masked offset: 0x0006 (binary: 000000110)
-    -> LEA encoding: dr=R0, offset=6 -> 0xE006
+    -> LEA encoding (Load Effective Address):
+       Format: [1110][DR][PCoffset9]
+       Opcode: 1110 (0xE) = 0xE000
+       Destination register: R0 = 0x0000
+       PC offset: 6 (9 bits) = 0x0006
+       Target address: 0x300E
+       Write register: R0
+       Operation: R0 = PC + 6 = 0x300E
+       Encoding: 0xE000 | 0x0000 | 0x0006 = 0xE006
+       Machine code: 0xE006 (1110000000000110)
     -> Write: 0xE006 (binary: 1110000000000110)
   [Line   3] Tokenize: '     ldw   r0,r0,#0'
     -> Tokens: ['ldw', 'r0', 'r0', '#0']
@@ -64,6 +73,17 @@ Final address: 0x3010 (12304)
     -> Parse register: r0 -> R0
     -> Parse register: r0 -> R0
     -> Parse constant (decimal): #0 -> 0 (0x0000)
+    -> LDW encoding (Load Word):
+       Format: [0110][DR][Base][offset6]
+       Opcode: 0110 (0x6) = 0x6000
+       Destination register: R0 = 0x0000
+       Base register: R0 = 0x0000
+       Offset: 0 (6 bits, signed) = 0x00
+       Read register: R0 (base address)
+       Write register: R0
+       Operation: R0 = Mem[R0 + 0] (word)
+       Encoding: 0x6000 | 0x0000 | 0x0000 | 0x00 = 0x6000
+       Machine code: 0x6000 (0110000000000000)
     -> Write: 0x6000 (binary: 0110000000000000)
   [Line   4] Tokenize: '     lshf  r0,r0,#3'
     -> Tokens: ['lshf', 'r0', 'r0', '#3']
@@ -72,6 +92,16 @@ Final address: 0x3010 (12304)
     -> Parse register: r0 -> R0
     -> Parse constant (decimal): #3 -> 3 (0x0003)
     -> Shift encoding: op=1101, dr=R0, sr=R0, mode=00, amount=3 -> 0xD003
+    -> LSHF encoding:
+       Format: [1101][DR][SR][mode][amount4]
+       Opcode: 1101 (0xD) = 0xD000
+       Destination register: R0 = 0x0000
+       Source register: R0 = 0x0000
+       Shift mode: 00 (logical left shift) = 0x0000
+       Shift amount: 3 (4 bits) = 0x0003
+       Operation: R0 = R0 << 3
+       Encoding: 0xD000 | 0x0000 | 0x0000 | 0x0000 | 0x0003 = 0xD003
+       Machine code: 0xD003 (1101000000000011)
     -> Write: 0xD003 (binary: 1101000000000011)
   [Line   5] Tokenize: '     rshfl r0,r0,#3'
     -> Tokens: ['rshfl', 'r0', 'r0', '#3']
@@ -80,6 +110,16 @@ Final address: 0x3010 (12304)
     -> Parse register: r0 -> R0
     -> Parse constant (decimal): #3 -> 3 (0x0003)
     -> Shift encoding: op=1101, dr=R0, sr=R0, mode=01, amount=3 -> 0xD013
+    -> RSHFL encoding:
+       Format: [1101][DR][SR][mode][amount4]
+       Opcode: 1101 (0xD) = 0xD000
+       Destination register: R0 = 0x0000
+       Source register: R0 = 0x0000
+       Shift mode: 01 (logical right shift) = 0x0010
+       Shift amount: 3 (4 bits) = 0x0003
+       Operation: R0 = R0 >>> 3 (logical)
+       Encoding: 0xD000 | 0x0000 | 0x0000 | 0x0010 | 0x0003 = 0xD013
+       Machine code: 0xD013 (1101000000010011)
     -> Write: 0xD013 (binary: 1101000000010011)
   [Line   6] Tokenize: '     lshf  r0,r0,#3'
     -> Tokens: ['lshf', 'r0', 'r0', '#3']
@@ -88,6 +128,16 @@ Final address: 0x3010 (12304)
     -> Parse register: r0 -> R0
     -> Parse constant (decimal): #3 -> 3 (0x0003)
     -> Shift encoding: op=1101, dr=R0, sr=R0, mode=00, amount=3 -> 0xD003
+    -> LSHF encoding:
+       Format: [1101][DR][SR][mode][amount4]
+       Opcode: 1101 (0xD) = 0xD000
+       Destination register: R0 = 0x0000
+       Source register: R0 = 0x0000
+       Shift mode: 00 (logical left shift) = 0x0000
+       Shift amount: 3 (4 bits) = 0x0003
+       Operation: R0 = R0 << 3
+       Encoding: 0xD000 | 0x0000 | 0x0000 | 0x0000 | 0x0003 = 0xD003
+       Machine code: 0xD003 (1101000000000011)
     -> Write: 0xD003 (binary: 1101000000000011)
   [Line   7] Tokenize: '     rshfa r0,r0,#3'
     -> Tokens: ['rshfa', 'r0', 'r0', '#3']
@@ -96,17 +146,38 @@ Final address: 0x3010 (12304)
     -> Parse register: r0 -> R0
     -> Parse constant (decimal): #3 -> 3 (0x0003)
     -> Shift encoding: op=1101, dr=R0, sr=R0, mode=11, amount=3 -> 0xD033
+    -> RSHFA encoding:
+       Format: [1101][DR][SR][mode][amount4]
+       Opcode: 1101 (0xD) = 0xD000
+       Destination register: R0 = 0x0000
+       Source register: R0 = 0x0000
+       Shift mode: 11 (arithmetic right shift) = 0x0030
+       Shift amount: 3 (4 bits) = 0x0003
+       Operation: R0 = R0 >> 3 (arithmetic, sign-extended)
+       Encoding: 0xD000 | 0x0000 | 0x0000 | 0x0030 | 0x0003 = 0xD033
+       Machine code: 0xD033 (1101000000110011)
     -> Write: 0xD033 (binary: 1101000000110011)
   [Line   8] Tokenize: '     halt'
     -> Tokens: ['halt']
   [Line   8] Address 0x300C: halt []
-    -> HALT encoding: -> 0xF025
+    -> HALT encoding (TRAP x25):
+       TRAP instruction format: [1111][trapvect8]
+       Opcode: 1111 (0xF) = 0xF000
+       Trap vector: x25 (0x25) = 0x0025
+       Encoding: 0xF000 | 0x0025 = 0xF025
+       Operation: System call to halt the program
+       Effect: Program execution stops, no return value
+       Machine code: 0xF025 (1111000000100101)
     -> Write: 0xF025 (binary: 1111000000100101)
   [Line  10] Tokenize: 'a   .fill x1234'
     -> Tokens: ['a', '.fill', 'x1234']
   [Line  10] Address 0x300E: .fill ['x1234']
     -> Parse constant (hex): x1234 -> 4660 (0x1234)
-    -> .FILL encoding: 0x1234
+    -> .FILL pseudo-op encoding:
+       Pseudo-op: .FILL (not a real instruction)
+       Value: 4660 (0x1234)
+       Operation: Store 16-bit value at current address
+       Output: 0x1234 (0001001000110100)
     -> Write: 0x1234 (binary: 0001001000110100)
   [Line  12] Tokenize: '    .end'
     -> Tokens: ['.end']

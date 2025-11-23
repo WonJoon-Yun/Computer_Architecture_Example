@@ -152,7 +152,16 @@ Final address: 0x303C (12348)
     -> LEA target: Symbol 'instr' -> 0x3032
     -> PC offset: target=0x3032, current=0x3000, offset=24 (9 bits)
     -> Masked offset: 0x0018 (binary: 000011000)
-    -> LEA encoding: dr=R0, offset=24 -> 0xE018
+    -> LEA encoding (Load Effective Address):
+       Format: [1110][DR][PCoffset9]
+       Opcode: 1110 (0xE) = 0xE000
+       Destination register: R0 = 0x0000
+       PC offset: 24 (9 bits) = 0x0018
+       Target address: 0x3032
+       Write register: R0
+       Operation: R0 = PC + 24 = 0x3032
+       Encoding: 0xE000 | 0x0000 | 0x0018 = 0xE018
+       Machine code: 0xE018 (1110000000011000)
     -> Write: 0xE018 (binary: 1110000000011000)
   [Line   7] Tokenize: '             ldw r0, r0, #0'
     -> Tokens: ['ldw', 'r0', 'r0', '#0']
@@ -160,6 +169,17 @@ Final address: 0x303C (12348)
     -> Parse register: r0 -> R0
     -> Parse register: r0 -> R0
     -> Parse constant (decimal): #0 -> 0 (0x0000)
+    -> LDW encoding (Load Word):
+       Format: [0110][DR][Base][offset6]
+       Opcode: 0110 (0x6) = 0x6000
+       Destination register: R0 = 0x0000
+       Base register: R0 = 0x0000
+       Offset: 0 (6 bits, signed) = 0x00
+       Read register: R0 (base address)
+       Write register: R0
+       Operation: R0 = Mem[R0 + 0] (word)
+       Encoding: 0x6000 | 0x0000 | 0x0000 | 0x00 = 0x6000
+       Machine code: 0x6000 (0110000000000000)
     -> Write: 0x6000 (binary: 0110000000000000)
   [Line   8] Tokenize: '			 ldw r0, r0, #0 ; r0=in'
     -> Tokens: ['ldw', 'r0', 'r0', '#0']
@@ -168,6 +188,17 @@ Final address: 0x303C (12348)
     -> Parse register: r0 -> R0
     -> Parse register: r0 -> R0
     -> Parse constant (decimal): #0 -> 0 (0x0000)
+    -> LDW encoding (Load Word):
+       Format: [0110][DR][Base][offset6]
+       Opcode: 0110 (0x6) = 0x6000
+       Destination register: R0 = 0x0000
+       Base register: R0 = 0x0000
+       Offset: 0 (6 bits, signed) = 0x00
+       Read register: R0 (base address)
+       Write register: R0
+       Operation: R0 = Mem[R0 + 0] (word)
+       Encoding: 0x6000 | 0x0000 | 0x0000 | 0x00 = 0x6000
+       Machine code: 0x6000 (0110000000000000)
     -> Write: 0x6000 (binary: 0110000000000000)
   [Line   9] Tokenize: '             lea r2, outstr'
     -> Tokens: ['lea', 'r2', 'outstr']
@@ -176,7 +207,16 @@ Final address: 0x303C (12348)
     -> LEA target: Symbol 'outstr' -> 0x3034
     -> PC offset: target=0x3034, current=0x3006, offset=22 (9 bits)
     -> Masked offset: 0x0016 (binary: 000010110)
-    -> LEA encoding: dr=R2, offset=22 -> 0xE416
+    -> LEA encoding (Load Effective Address):
+       Format: [1110][DR][PCoffset9]
+       Opcode: 1110 (0xE) = 0xE000
+       Destination register: R2 = 0x0400
+       PC offset: 22 (9 bits) = 0x0016
+       Target address: 0x3034
+       Write register: R2
+       Operation: R2 = PC + 22 = 0x3034
+       Encoding: 0xE000 | 0x0400 | 0x0016 = 0xE416
+       Machine code: 0xE416 (1110010000010110)
     -> Write: 0xE416 (binary: 1110010000010110)
   [Line  10] Tokenize: '			 ldw r2, r2, #0'
     -> Tokens: ['ldw', 'r2', 'r2', '#0']
@@ -184,6 +224,17 @@ Final address: 0x303C (12348)
     -> Parse register: r2 -> R2
     -> Parse register: r2 -> R2
     -> Parse constant (decimal): #0 -> 0 (0x0000)
+    -> LDW encoding (Load Word):
+       Format: [0110][DR][Base][offset6]
+       Opcode: 0110 (0x6) = 0x6000
+       Destination register: R2 = 0x0400
+       Base register: R2 = 0x0080
+       Offset: 0 (6 bits, signed) = 0x00
+       Read register: R2 (base address)
+       Write register: R2
+       Operation: R2 = Mem[R2 + 0] (word)
+       Encoding: 0x6000 | 0x0400 | 0x0080 | 0x00 = 0x6480
+       Machine code: 0x6480 (0110010010000000)
     -> Write: 0x6480 (binary: 0110010010000000)
   [Line  11] Tokenize: '			 ldw r2, r2, #0 ; r2=out'
     -> Tokens: ['ldw', 'r2', 'r2', '#0']
@@ -192,6 +243,17 @@ Final address: 0x303C (12348)
     -> Parse register: r2 -> R2
     -> Parse register: r2 -> R2
     -> Parse constant (decimal): #0 -> 0 (0x0000)
+    -> LDW encoding (Load Word):
+       Format: [0110][DR][Base][offset6]
+       Opcode: 0110 (0x6) = 0x6000
+       Destination register: R2 = 0x0400
+       Base register: R2 = 0x0080
+       Offset: 0 (6 bits, signed) = 0x00
+       Read register: R2 (base address)
+       Write register: R2
+       Operation: R2 = Mem[R2 + 0] (word)
+       Encoding: 0x6000 | 0x0400 | 0x0080 | 0x00 = 0x6480
+       Machine code: 0x6480 (0110010010000000)
     -> Write: 0x6480 (binary: 0110010010000000)
   [Line  12] Tokenize: '             lea r5, smalla ; r5=-'a''
     -> Tokens: ['lea', 'r5', 'smalla']
@@ -201,7 +263,16 @@ Final address: 0x303C (12348)
     -> LEA target: Symbol 'smalla' -> 0x3036
     -> PC offset: target=0x3036, current=0x300C, offset=20 (9 bits)
     -> Masked offset: 0x0014 (binary: 000010100)
-    -> LEA encoding: dr=R5, offset=20 -> 0xEA14
+    -> LEA encoding (Load Effective Address):
+       Format: [1110][DR][PCoffset9]
+       Opcode: 1110 (0xE) = 0xE000
+       Destination register: R5 = 0x0A00
+       PC offset: 20 (9 bits) = 0x0014
+       Target address: 0x3036
+       Write register: R5
+       Operation: R5 = PC + 20 = 0x3036
+       Encoding: 0xE000 | 0x0A00 | 0x0014 = 0xEA14
+       Machine code: 0xEA14 (1110101000010100)
     -> Write: 0xEA14 (binary: 1110101000010100)
   [Line  13] Tokenize: '             ldw r5, r5, #0'
     -> Tokens: ['ldw', 'r5', 'r5', '#0']
@@ -209,6 +280,17 @@ Final address: 0x303C (12348)
     -> Parse register: r5 -> R5
     -> Parse register: r5 -> R5
     -> Parse constant (decimal): #0 -> 0 (0x0000)
+    -> LDW encoding (Load Word):
+       Format: [0110][DR][Base][offset6]
+       Opcode: 0110 (0x6) = 0x6000
+       Destination register: R5 = 0x0A00
+       Base register: R5 = 0x0140
+       Offset: 0 (6 bits, signed) = 0x00
+       Read register: R5 (base address)
+       Write register: R5
+       Operation: R5 = Mem[R5 + 0] (word)
+       Encoding: 0x6000 | 0x0A00 | 0x0140 | 0x00 = 0x6B40
+       Machine code: 0x6B40 (0110101101000000)
     -> Write: 0x6B40 (binary: 0110101101000000)
   [Line  14] Tokenize: '             lea r6, atoz   ; r6='a'-'z''
     -> Tokens: ['lea', 'r6', 'atoz']
@@ -218,7 +300,16 @@ Final address: 0x303C (12348)
     -> LEA target: Symbol 'atoz' -> 0x3038
     -> PC offset: target=0x3038, current=0x3010, offset=19 (9 bits)
     -> Masked offset: 0x0013 (binary: 000010011)
-    -> LEA encoding: dr=R6, offset=19 -> 0xEC13
+    -> LEA encoding (Load Effective Address):
+       Format: [1110][DR][PCoffset9]
+       Opcode: 1110 (0xE) = 0xE000
+       Destination register: R6 = 0x0C00
+       PC offset: 19 (9 bits) = 0x0013
+       Target address: 0x3038
+       Write register: R6
+       Operation: R6 = PC + 19 = 0x3038
+       Encoding: 0xE000 | 0x0C00 | 0x0013 = 0xEC13
+       Machine code: 0xEC13 (1110110000010011)
     -> Write: 0xEC13 (binary: 1110110000010011)
   [Line  15] Tokenize: '             ldw r6, r6, #0'
     -> Tokens: ['ldw', 'r6', 'r6', '#0']
@@ -226,6 +317,17 @@ Final address: 0x303C (12348)
     -> Parse register: r6 -> R6
     -> Parse register: r6 -> R6
     -> Parse constant (decimal): #0 -> 0 (0x0000)
+    -> LDW encoding (Load Word):
+       Format: [0110][DR][Base][offset6]
+       Opcode: 0110 (0x6) = 0x6000
+       Destination register: R6 = 0x0C00
+       Base register: R6 = 0x0180
+       Offset: 0 (6 bits, signed) = 0x00
+       Read register: R6 (base address)
+       Write register: R6
+       Operation: R6 = Mem[R6 + 0] (word)
+       Encoding: 0x6000 | 0x0C00 | 0x0180 | 0x00 = 0x6D80
+       Machine code: 0x6D80 (0110110110000000)
     -> Write: 0x6D80 (binary: 0110110110000000)
   [Line  16] Tokenize: '             lea r7, biga   ; r7='a''
     -> Tokens: ['lea', 'r7', 'biga']
@@ -235,7 +337,16 @@ Final address: 0x303C (12348)
     -> LEA target: Symbol 'biga' -> 0x303A
     -> PC offset: target=0x303A, current=0x3014, offset=18 (9 bits)
     -> Masked offset: 0x0012 (binary: 000010010)
-    -> LEA encoding: dr=R7, offset=18 -> 0xEE12
+    -> LEA encoding (Load Effective Address):
+       Format: [1110][DR][PCoffset9]
+       Opcode: 1110 (0xE) = 0xE000
+       Destination register: R7 = 0x0E00
+       PC offset: 18 (9 bits) = 0x0012
+       Target address: 0x303A
+       Write register: R7
+       Operation: R7 = PC + 18 = 0x303A
+       Encoding: 0xE000 | 0x0E00 | 0x0012 = 0xEE12
+       Machine code: 0xEE12 (1110111000010010)
     -> Write: 0xEE12 (binary: 1110111000010010)
   [Line  17] Tokenize: '             ldw r7, r7, #0'
     -> Tokens: ['ldw', 'r7', 'r7', '#0']
@@ -243,6 +354,17 @@ Final address: 0x303C (12348)
     -> Parse register: r7 -> R7
     -> Parse register: r7 -> R7
     -> Parse constant (decimal): #0 -> 0 (0x0000)
+    -> LDW encoding (Load Word):
+       Format: [0110][DR][Base][offset6]
+       Opcode: 0110 (0x6) = 0x6000
+       Destination register: R7 = 0x0E00
+       Base register: R7 = 0x01C0
+       Offset: 0 (6 bits, signed) = 0x00
+       Read register: R7 (base address)
+       Write register: R7
+       Operation: R7 = Mem[R7 + 0] (word)
+       Encoding: 0x6000 | 0x0E00 | 0x01C0 | 0x00 = 0x6FC0
+       Machine code: 0x6FC0 (0110111111000000)
     -> Write: 0x6FC0 (binary: 0110111111000000)
   [Line  18] Tokenize: 'loop         ldw r1, r0, #0 ; r1=*in=inchar'
     -> Tokens: ['loop', 'ldw', 'r1', 'r0', '#0']
@@ -251,6 +373,17 @@ Final address: 0x303C (12348)
     -> Parse register: r1 -> R1
     -> Parse register: r0 -> R0
     -> Parse constant (decimal): #0 -> 0 (0x0000)
+    -> LDW encoding (Load Word):
+       Format: [0110][DR][Base][offset6]
+       Opcode: 0110 (0x6) = 0x6000
+       Destination register: R1 = 0x0200
+       Base register: R0 = 0x0000
+       Offset: 0 (6 bits, signed) = 0x00
+       Read register: R0 (base address)
+       Write register: R1
+       Operation: R1 = Mem[R0 + 0] (word)
+       Encoding: 0x6000 | 0x0200 | 0x0000 | 0x00 = 0x6200
+       Machine code: 0x6200 (0110001000000000)
     -> Write: 0x6200 (binary: 0110001000000000)
   [Line  19] Tokenize: '             brz done       ; if inchar='\0''
     -> Tokens: ['brz', 'done']
@@ -259,7 +392,11 @@ Final address: 0x303C (12348)
     -> BR target: Symbol 'done' -> 0x302E
     -> PC offset: target=0x302E, current=0x301A, offset=9 (9 bits)
     -> Masked offset: 0x0009 (binary: 000001001)
-    -> BR encoding: n=0, z=1, p=0, offset=9 -> 0x0409 (0000010000001001)
+    -> BR encoding:
+       Condition flags: N=0, Z=1, P=0 (Z)
+       Target address: 0x302E
+       Operation: if (condition) PC = PC + 9 = 0x302E
+       Machine code: 0x0409 (0000010000001001)
     -> Write: 0x0409 (binary: 0000010000001001)
   [Line  20] Tokenize: '             add r4, r1, r5 ; r4=inchar-'a'=c'
     -> Tokens: ['add', 'r4', 'r1', 'r5']
@@ -268,7 +405,18 @@ Final address: 0x303C (12348)
     -> Parse register: r4 -> R4
     -> Parse register: r1 -> R1
     -> Parse register: r5 -> R5
-    -> ADD encoding (register): op=1, dr=R4, sr1=R1, sr2=R5 -> 0x1845
+    -> ADD encoding (register mode):
+       Format: [0001][DR][SR1][0][00][SR2]
+       Opcode: 0001 (0x1) = 0x1000
+       Destination register: R4 = 0x0800
+       Source register 1: R1 = 0x0040
+       Source register 2: R5 = 0x0005
+       Mode bit: 0 (register mode)
+       Read registers: R1, R5
+       Write register: R4
+       Operation: R4 = R1 + R5
+       Encoding: 0x1000 | 0x0800 | 0x0040 | 0x0005 = 0x1845
+       Machine code: 0x1845 (0001100001000101)
     -> Write: 0x1845 (binary: 0001100001000101)
   [Line  21] Tokenize: '             brn nochange   ; if c < 'a''
     -> Tokens: ['brn', 'nochange']
@@ -277,7 +425,11 @@ Final address: 0x303C (12348)
     -> BR target: Symbol 'nochange' -> 0x3026
     -> PC offset: target=0x3026, current=0x301E, offset=3 (9 bits)
     -> Masked offset: 0x0003 (binary: 000000011)
-    -> BR encoding: n=1, z=0, p=0, offset=3 -> 0x0803 (0000100000000011)
+    -> BR encoding:
+       Condition flags: N=1, Z=0, P=0 (N)
+       Target address: 0x3026
+       Operation: if (condition) PC = PC + 3 = 0x3026
+       Machine code: 0x0803 (0000100000000011)
     -> Write: 0x0803 (binary: 0000100000000011)
   [Line  22] Tokenize: '             add r3, r4, r6 ; r3 = c-25'
     -> Tokens: ['add', 'r3', 'r4', 'r6']
@@ -286,7 +438,18 @@ Final address: 0x303C (12348)
     -> Parse register: r3 -> R3
     -> Parse register: r4 -> R4
     -> Parse register: r6 -> R6
-    -> ADD encoding (register): op=1, dr=R3, sr1=R4, sr2=R6 -> 0x1706
+    -> ADD encoding (register mode):
+       Format: [0001][DR][SR1][0][00][SR2]
+       Opcode: 0001 (0x1) = 0x1000
+       Destination register: R3 = 0x0600
+       Source register 1: R4 = 0x0100
+       Source register 2: R6 = 0x0006
+       Mode bit: 0 (register mode)
+       Read registers: R4, R6
+       Write register: R3
+       Operation: R3 = R4 + R6
+       Encoding: 0x1000 | 0x0600 | 0x0100 | 0x0006 = 0x1706
+       Machine code: 0x1706 (0001011100000110)
     -> Write: 0x1706 (binary: 0001011100000110)
   [Line  23] Tokenize: '             brp nochange   ; if c > 'z''
     -> Tokens: ['brp', 'nochange']
@@ -295,7 +458,11 @@ Final address: 0x303C (12348)
     -> BR target: Symbol 'nochange' -> 0x3026
     -> PC offset: target=0x3026, current=0x3022, offset=1 (9 bits)
     -> Masked offset: 0x0001 (binary: 000000001)
-    -> BR encoding: n=0, z=0, p=1, offset=1 -> 0x0201 (0000001000000001)
+    -> BR encoding:
+       Condition flags: N=0, Z=0, P=1 (P)
+       Target address: 0x3026
+       Operation: if (condition) PC = PC + 1 = 0x3026
+       Machine code: 0x0201 (0000001000000001)
     -> Write: 0x0201 (binary: 0000001000000001)
   [Line  24] Tokenize: '             add r1, r4, r7 ; inchar=c+'a''
     -> Tokens: ['add', 'r1', 'r4', 'r7']
@@ -304,7 +471,18 @@ Final address: 0x303C (12348)
     -> Parse register: r1 -> R1
     -> Parse register: r4 -> R4
     -> Parse register: r7 -> R7
-    -> ADD encoding (register): op=1, dr=R1, sr1=R4, sr2=R7 -> 0x1307
+    -> ADD encoding (register mode):
+       Format: [0001][DR][SR1][0][00][SR2]
+       Opcode: 0001 (0x1) = 0x1000
+       Destination register: R1 = 0x0200
+       Source register 1: R4 = 0x0100
+       Source register 2: R7 = 0x0007
+       Mode bit: 0 (register mode)
+       Read registers: R4, R7
+       Write register: R1
+       Operation: R1 = R4 + R7
+       Encoding: 0x1000 | 0x0200 | 0x0100 | 0x0007 = 0x1307
+       Machine code: 0x1307 (0001001100000111)
     -> Write: 0x1307 (binary: 0001001100000111)
   [Line  25] Tokenize: 'nochange     stw r1, r2, #0 ; *outstr=r1'
     -> Tokens: ['nochange', 'stw', 'r1', 'r2', '#0']
@@ -313,6 +491,17 @@ Final address: 0x303C (12348)
     -> Parse register: r1 -> R1
     -> Parse register: r2 -> R2
     -> Parse constant (decimal): #0 -> 0 (0x0000)
+    -> STW encoding (Store Word):
+       Format: [0111][SR][Base][offset6]
+       Opcode: 0111 (0x7) = 0x7000
+       Source register: R1 = 0x0200
+       Base register: R2 = 0x0080
+       Offset: 0 (6 bits, signed) = 0x00
+       Read registers: R1 (data), R2 (base address)
+       Write memory: Mem[R2 + 0] (word)
+       Operation: Mem[R2 + 0] = R1 (word)
+       Encoding: 0x7000 | 0x0200 | 0x0080 | 0x00 = 0x7280
+       Machine code: 0x7280 (0111001010000000)
     -> Write: 0x7280 (binary: 0111001010000000)
   [Line  26] Tokenize: '			 add r0, r0, #2'
     -> Tokens: ['add', 'r0', 'r0', '#2']
@@ -320,7 +509,18 @@ Final address: 0x303C (12348)
     -> Parse register: r0 -> R0
     -> Parse register: r0 -> R0
     -> Parse constant (decimal): #2 -> 2 (0x0002)
-    -> ADD encoding (immediate): op=1, dr=R0, sr1=R0, imm5=2 -> 0x1022
+    -> ADD encoding (immediate mode):
+       Format: [0001][DR][SR1][1][imm5]
+       Opcode: 0001 (0x1) = 0x1000
+       Destination register: R0 = 0x0000
+       Source register 1: R0 = 0x0000
+       Mode bit: 1 (immediate mode) = 0x0020
+       Immediate value: 2 (5 bits, signed) = 0x02
+       Read register: R0
+       Write register: R0
+       Operation: R0 = R0 + 2
+       Encoding: 0x1000 | 0x0000 | 0x0000 | 0x0020 | 0x02 = 0x1022
+       Machine code: 0x1022 (0001000000100010)
     -> Write: 0x1022 (binary: 0001000000100010)
   [Line  27] Tokenize: '             add r2, r2, #2'
     -> Tokens: ['add', 'r2', 'r2', '#2']
@@ -328,7 +528,18 @@ Final address: 0x303C (12348)
     -> Parse register: r2 -> R2
     -> Parse register: r2 -> R2
     -> Parse constant (decimal): #2 -> 2 (0x0002)
-    -> ADD encoding (immediate): op=1, dr=R2, sr1=R2, imm5=2 -> 0x14A2
+    -> ADD encoding (immediate mode):
+       Format: [0001][DR][SR1][1][imm5]
+       Opcode: 0001 (0x1) = 0x1000
+       Destination register: R2 = 0x0400
+       Source register 1: R2 = 0x0080
+       Mode bit: 1 (immediate mode) = 0x0020
+       Immediate value: 2 (5 bits, signed) = 0x02
+       Read register: R2
+       Write register: R2
+       Operation: R2 = R2 + 2
+       Encoding: 0x1000 | 0x0400 | 0x0080 | 0x0020 | 0x02 = 0x14A2
+       Machine code: 0x14A2 (0001010010100010)
     -> Write: 0x14A2 (binary: 0001010010100010)
   [Line  28] Tokenize: '             br  loop'
     -> Tokens: ['br', 'loop']
@@ -336,7 +547,11 @@ Final address: 0x303C (12348)
     -> BR target: Symbol 'loop' -> 0x3018
     -> PC offset: target=0x3018, current=0x302C, offset=-11 (9 bits)
     -> Masked offset: 0x01F5 (binary: 111110101)
-    -> BR encoding: n=1, z=1, p=1, offset=501 -> 0x0FF5 (0000111111110101)
+    -> BR encoding:
+       Condition flags: N=1, Z=1, P=1 (NZP)
+       Target address: 0x3018
+       Operation: if (condition) PC = PC + 501 = 0x3018
+       Machine code: 0x0FF5 (0000111111110101)
     -> Write: 0x0FF5 (binary: 0000111111110101)
   [Line  30] Tokenize: 'done         stw r1, r2, #0 ; *outstr=r1'
     -> Tokens: ['done', 'stw', 'r1', 'r2', '#0']
@@ -345,43 +560,81 @@ Final address: 0x303C (12348)
     -> Parse register: r1 -> R1
     -> Parse register: r2 -> R2
     -> Parse constant (decimal): #0 -> 0 (0x0000)
+    -> STW encoding (Store Word):
+       Format: [0111][SR][Base][offset6]
+       Opcode: 0111 (0x7) = 0x7000
+       Source register: R1 = 0x0200
+       Base register: R2 = 0x0080
+       Offset: 0 (6 bits, signed) = 0x00
+       Read registers: R1 (data), R2 (base address)
+       Write memory: Mem[R2 + 0] (word)
+       Operation: Mem[R2 + 0] = R1 (word)
+       Encoding: 0x7000 | 0x0200 | 0x0080 | 0x00 = 0x7280
+       Machine code: 0x7280 (0111001010000000)
     -> Write: 0x7280 (binary: 0111001010000000)
   [Line  31] Tokenize: '             halt'
     -> Tokens: ['halt']
   [Line  31] Address 0x3030: halt []
-    -> HALT encoding: -> 0xF025
+    -> HALT encoding (TRAP x25):
+       TRAP instruction format: [1111][trapvect8]
+       Opcode: 1111 (0xF) = 0xF000
+       Trap vector: x25 (0x25) = 0x0025
+       Encoding: 0xF000 | 0x0025 = 0xF025
+       Operation: System call to halt the program
+       Effect: Program execution stops, no return value
+       Machine code: 0xF025 (1111000000100101)
     -> Write: 0xF025 (binary: 1111000000100101)
   [Line  33] Tokenize: 'instr        .fill x4000'
     -> Tokens: ['instr', '.fill', 'x4000']
   [Line  33] Address 0x3032: .fill ['x4000']
     -> Parse constant (hex): x4000 -> 16384 (0x4000)
-    -> .FILL encoding: 0x4000
+    -> .FILL pseudo-op encoding:
+       Pseudo-op: .FILL (not a real instruction)
+       Value: 16384 (0x4000)
+       Operation: Store 16-bit value at current address
+       Output: 0x4000 (0100000000000000)
     -> Write: 0x4000 (binary: 0100000000000000)
   [Line  34] Tokenize: 'outstr       .fill x4002'
     -> Tokens: ['outstr', '.fill', 'x4002']
   [Line  34] Address 0x3034: .fill ['x4002']
     -> Parse constant (hex): x4002 -> 16386 (0x4002)
-    -> .FILL encoding: 0x4002
+    -> .FILL pseudo-op encoding:
+       Pseudo-op: .FILL (not a real instruction)
+       Value: 16386 (0x4002)
+       Operation: Store 16-bit value at current address
+       Output: 0x4002 (0100000000000010)
     -> Write: 0x4002 (binary: 0100000000000010)
   [Line  35] Tokenize: 'smalla       .fill xff9f ; -'a''
     -> Tokens: ['smalla', '.fill', 'xff9f']
     -> Comment: '-'a''
   [Line  35] Address 0x3036: .fill ['xff9f']
     -> Parse constant (hex): xff9f -> 65439 (0xFF9F)
-    -> .FILL encoding: 0xFF9F
+    -> .FILL pseudo-op encoding:
+       Pseudo-op: .FILL (not a real instruction)
+       Value: 65439 (0xFF9F)
+       Operation: Store 16-bit value at current address
+       Output: 0xFF9F (1111111110011111)
     -> Write: 0xFF9F (binary: 1111111110011111)
   [Line  36] Tokenize: 'atoz         .fill #-25'
     -> Tokens: ['atoz', '.fill', '#-25']
   [Line  36] Address 0x3038: .fill ['#-25']
     -> Parse constant (decimal): #-25 -> -25 (0x-019)
-    -> .FILL encoding: 0xFFE7
+    -> .FILL pseudo-op encoding:
+       Pseudo-op: .FILL (not a real instruction)
+       Value: -25 (0x-019)
+       Operation: Store 16-bit value at current address
+       Output: 0xFFE7 (1111111111100111)
     -> Write: 0xFFE7 (binary: 1111111111100111)
   [Line  37] Tokenize: 'biga         .fill x0041 ; 'a''
     -> Tokens: ['biga', '.fill', 'x0041']
     -> Comment: ''a''
   [Line  37] Address 0x303A: .fill ['x0041']
     -> Parse constant (hex): x0041 -> 65 (0x0041)
-    -> .FILL encoding: 0x0041
+    -> .FILL pseudo-op encoding:
+       Pseudo-op: .FILL (not a real instruction)
+       Value: 65 (0x0041)
+       Operation: Store 16-bit value at current address
+       Output: 0x0041 (0000000001000001)
     -> Write: 0x0041 (binary: 0000000001000001)
   [Line  38] Tokenize: '             .end'
     -> Tokens: ['.end']

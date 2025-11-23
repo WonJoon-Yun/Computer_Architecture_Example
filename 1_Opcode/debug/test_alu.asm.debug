@@ -56,7 +56,18 @@ Final address: 0x3012 (12306)
     -> Parse register: r0 -> R0
     -> Parse register: r0 -> R0
     -> Parse constant (decimal): #15 -> 15 (0x000F)
-    -> ADD encoding (immediate): op=1, dr=R0, sr1=R0, imm5=15 -> 0x102F
+    -> ADD encoding (immediate mode):
+       Format: [0001][DR][SR1][1][imm5]
+       Opcode: 0001 (0x1) = 0x1000
+       Destination register: R0 = 0x0000
+       Source register 1: R0 = 0x0000
+       Mode bit: 1 (immediate mode) = 0x0020
+       Immediate value: 15 (5 bits, signed) = 0x0F
+       Read register: R0
+       Write register: R0
+       Operation: R0 = R0 + 15
+       Encoding: 0x1000 | 0x0000 | 0x0000 | 0x0020 | 0x0F = 0x102F
+       Machine code: 0x102F (0001000000101111)
     -> Write: 0x102F (binary: 0001000000101111)
   [Line   3] Tokenize: '	add r0, r0, #-16'
     -> Tokens: ['add', 'r0', 'r0', '#-16']
@@ -64,7 +75,18 @@ Final address: 0x3012 (12306)
     -> Parse register: r0 -> R0
     -> Parse register: r0 -> R0
     -> Parse constant (decimal): #-16 -> -16 (0x-010)
-    -> ADD encoding (immediate): op=1, dr=R0, sr1=R0, imm5=16 -> 0x1030
+    -> ADD encoding (immediate mode):
+       Format: [0001][DR][SR1][1][imm5]
+       Opcode: 0001 (0x1) = 0x1000
+       Destination register: R0 = 0x0000
+       Source register 1: R0 = 0x0000
+       Mode bit: 1 (immediate mode) = 0x0020
+       Immediate value: 16 (5 bits, signed) = 0x10
+       Read register: R0
+       Write register: R0
+       Operation: R0 = R0 + 16
+       Encoding: 0x1000 | 0x0000 | 0x0000 | 0x0020 | 0x10 = 0x1030
+       Machine code: 0x1030 (0001000000110000)
     -> Write: 0x1030 (binary: 0001000000110000)
   [Line   4] Tokenize: '	add r1, r1, r0'
     -> Tokens: ['add', 'r1', 'r1', 'r0']
@@ -72,7 +94,18 @@ Final address: 0x3012 (12306)
     -> Parse register: r1 -> R1
     -> Parse register: r1 -> R1
     -> Parse register: r0 -> R0
-    -> ADD encoding (register): op=1, dr=R1, sr1=R1, sr2=R0 -> 0x1240
+    -> ADD encoding (register mode):
+       Format: [0001][DR][SR1][0][00][SR2]
+       Opcode: 0001 (0x1) = 0x1000
+       Destination register: R1 = 0x0200
+       Source register 1: R1 = 0x0040
+       Source register 2: R0 = 0x0000
+       Mode bit: 0 (register mode)
+       Read registers: R1, R0
+       Write register: R1
+       Operation: R1 = R1 + R0
+       Encoding: 0x1000 | 0x0200 | 0x0040 | 0x0000 = 0x1240
+       Machine code: 0x1240 (0001001001000000)
     -> Write: 0x1240 (binary: 0001001001000000)
   [Line   5] Tokenize: '	and r1, r1, #1'
     -> Tokens: ['and', 'r1', 'r1', '#1']
@@ -80,7 +113,18 @@ Final address: 0x3012 (12306)
     -> Parse register: r1 -> R1
     -> Parse register: r1 -> R1
     -> Parse constant (decimal): #1 -> 1 (0x0001)
-    -> AND encoding (immediate): op=5, dr=R1, sr1=R1, imm5=1 -> 0x5261
+    -> AND encoding (immediate mode):
+       Format: [0101][DR][SR1][1][imm5]
+       Opcode: 0101 (0x5) = 0x5000
+       Destination register: R1 = 0x0200
+       Source register 1: R1 = 0x0040
+       Mode bit: 1 (immediate mode) = 0x0020
+       Immediate value: 1 (5 bits, signed) = 0x01
+       Read register: R1
+       Write register: R1
+       Operation: R1 = R1 & 1
+       Encoding: 0x5000 | 0x0200 | 0x0040 | 0x0020 | 0x01 = 0x5261
+       Machine code: 0x5261 (0101001001100001)
     -> Write: 0x5261 (binary: 0101001001100001)
   [Line   6] Tokenize: '	and r1, r1, r1'
     -> Tokens: ['and', 'r1', 'r1', 'r1']
@@ -88,7 +132,18 @@ Final address: 0x3012 (12306)
     -> Parse register: r1 -> R1
     -> Parse register: r1 -> R1
     -> Parse register: r1 -> R1
-    -> AND encoding (register): op=5, dr=R1, sr1=R1, sr2=R1 -> 0x5241
+    -> AND encoding (register mode):
+       Format: [0101][DR][SR1][0][00][SR2]
+       Opcode: 0101 (0x5) = 0x5000
+       Destination register: R1 = 0x0200
+       Source register 1: R1 = 0x0040
+       Source register 2: R1 = 0x0001
+       Mode bit: 0 (register mode)
+       Read registers: R1, R1
+       Write register: R1
+       Operation: R1 = R1 & R1
+       Encoding: 0x5000 | 0x0200 | 0x0040 | 0x0001 = 0x5241
+       Machine code: 0x5241 (0101001001000001)
     -> Write: 0x5241 (binary: 0101001001000001)
   [Line   7] Tokenize: '	xor r2, r0, x0f'
     -> Tokens: ['xor', 'r2', 'r0', 'x0f']
@@ -96,7 +151,18 @@ Final address: 0x3012 (12306)
     -> Parse register: r2 -> R2
     -> Parse register: r0 -> R0
     -> Parse constant (hex): x0f -> 15 (0x000F)
-    -> XOR encoding (immediate): op=9, dr=R2, sr1=R0, imm5=15 -> 0x942F
+    -> XOR encoding (immediate mode):
+       Format: [1001][DR][SR1][1][imm5]
+       Opcode: 1001 (0x9) = 0x9000
+       Destination register: R2 = 0x0400
+       Source register 1: R0 = 0x0000
+       Mode bit: 1 (immediate mode) = 0x0020
+       Immediate value: 15 (5 bits, signed) = 0x0F
+       Read register: R0
+       Write register: R2
+       Operation: R2 = R0 ^ 15
+       Encoding: 0x9000 | 0x0400 | 0x0000 | 0x0020 | 0x0F = 0x942F
+       Machine code: 0x942F (1001010000101111)
     -> Write: 0x942F (binary: 1001010000101111)
   [Line   8] Tokenize: '	xor r2, r0, r1'
     -> Tokens: ['xor', 'r2', 'r0', 'r1']
@@ -104,14 +170,35 @@ Final address: 0x3012 (12306)
     -> Parse register: r2 -> R2
     -> Parse register: r0 -> R0
     -> Parse register: r1 -> R1
-    -> XOR encoding (register): op=9, dr=R2, sr1=R0, sr2=R1 -> 0x9401
+    -> XOR encoding (register mode):
+       Format: [1001][DR][SR1][0][00][SR2]
+       Opcode: 1001 (0x9) = 0x9000
+       Destination register: R2 = 0x0400
+       Source register 1: R0 = 0x0000
+       Source register 2: R1 = 0x0001
+       Mode bit: 0 (register mode)
+       Read registers: R0, R1
+       Write register: R2
+       Operation: R2 = R0 ^ R1
+       Encoding: 0x9000 | 0x0400 | 0x0000 | 0x0001 = 0x9401
+       Machine code: 0x9401 (1001010000000001)
     -> Write: 0x9401 (binary: 1001010000000001)
   [Line   9] Tokenize: '	not r3, r0'
     -> Tokens: ['not', 'r3', 'r0']
   [Line   9] Address 0x300E: not ['r3', 'r0']
     -> Parse register: r3 -> R3
     -> Parse register: r0 -> R0
-    -> NOT encoding: dr=R3, sr=R0 -> 0x963F
+    -> NOT encoding:
+       Format: [1001][DR][SR][1][11111]
+       Opcode: 1001 (0x9) = 0x9000
+       Destination register: R3 = 0x0600
+       Source register: R0 = 0x0000
+       Immediate bits: 11111 (0x1F) = 0x003F
+       Read register: R0
+       Write register: R3
+       Operation: R3 = ~R0 (bitwise NOT)
+       Encoding: 0x9000 | 0x0600 | 0x0000 | 0x003F = 0x963F
+       Machine code: 0x963F (1001011000111111)
     -> Write: 0x963F (binary: 1001011000111111)
   [Line  12] Tokenize: '	add r0, r0, #16'
     -> Tokens: ['add', 'r0', 'r0', '#16']
@@ -120,7 +207,18 @@ Final address: 0x3012 (12306)
     -> Parse register: r0 -> R0
     -> Parse constant (decimal): #16 -> 16 (0x0010)
     -> Sign extend: 16 -> -16 (5 bits)
-    -> ADD encoding (immediate): op=1, dr=R0, sr1=R0, imm5=16 -> 0x1030
+    -> ADD encoding (immediate mode):
+       Format: [0001][DR][SR1][1][imm5]
+       Opcode: 0001 (0x1) = 0x1000
+       Destination register: R0 = 0x0000
+       Source register 1: R0 = 0x0000
+       Mode bit: 1 (immediate mode) = 0x0020
+       Immediate value: 16 (5 bits, signed) = 0x10
+       Read register: R0
+       Write register: R0
+       Operation: R0 = R0 + 16
+       Encoding: 0x1000 | 0x0000 | 0x0000 | 0x0020 | 0x10 = 0x1030
+       Machine code: 0x1030 (0001000000110000)
     -> Write: 0x1030 (binary: 0001000000110000)
   [Line  14] Tokenize: '	.end'
     -> Tokens: ['.end']

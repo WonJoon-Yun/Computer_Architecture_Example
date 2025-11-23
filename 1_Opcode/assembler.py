@@ -260,7 +260,12 @@ def encode_trap(vector_token: str, debug: bool = False) -> int:
         raise AssemblyError("Trap vector out of range")
     encoded = 0xF000 | trap_vector
     if debug:
-        debug_print(f"    -> TRAP encoding: vector={trap_vector} -> 0x{encoded:04X}")
+        debug_print(f"    -> TRAP encoding:")
+        debug_print(f"       TRAP instruction format: [1111][trapvect8]")
+        debug_print(f"       Opcode: 1111 (0xF) = 0xF000")
+        debug_print(f"       Trap vector: {vector_token} = 0x{trap_vector:02X} = 0x{trap_vector:04X}")
+        debug_print(f"       Encoding: 0xF000 | 0x{trap_vector:04X} = 0x{encoded:04X}")
+        debug_print(f"       Machine code: 0x{encoded:04X} ({encoded:016b})")
     return encoded
 
 
@@ -328,7 +333,11 @@ def assemble(lines: List[str], symbols: Dict[str, int], output_path: str, debug:
                     value = parse_constant(value_token, debug)
                 machine_word = value & 0xFFFF
                 if debug:
-                    debug_print(f"    -> .FILL encoding: 0x{machine_word:04X}")
+                    debug_print(f"    -> .FILL pseudo-op encoding:")
+                    debug_print(f"       Pseudo-op: .FILL (not a real instruction)")
+                    debug_print(f"       Value: {value} (0x{value:04X})")
+                    debug_print(f"       Operation: Store 16-bit value at current address")
+                    debug_print(f"       Output: 0x{machine_word:04X} ({machine_word:016b})")
 
             elif opcode.startswith("br"):
                 cond_str = opcode[2:]
@@ -347,7 +356,16 @@ def assemble(lines: List[str], symbols: Dict[str, int], output_path: str, debug:
                 offset = pc_offset(target, current_address, 9, debug)
                 machine_word = (0 << 12) | (n << 11) | (z << 10) | (p << 9) | offset
                 if debug:
-                    debug_print(f"    -> BR encoding: n={n}, z={z}, p={p}, offset={offset} -> 0x{machine_word:04X} ({machine_word:016b})")
+                    cond_desc = []
+                    if n: cond_desc.append("N")
+                    if z: cond_desc.append("Z")
+                    if p: cond_desc.append("P")
+                    cond_str_display = "".join(cond_desc) if cond_desc else "unconditional"
+                    debug_print(f"    -> BR encoding:")
+                    debug_print(f"       Condition flags: N={n}, Z={z}, P={p} ({cond_str_display})")
+                    debug_print(f"       Target address: 0x{target:04X}")
+                    debug_print(f"       Operation: if (condition) PC = PC + {offset} = 0x{target:04X}")
+                    debug_print(f"       Machine code: 0x{machine_word:04X} ({machine_word:016b})")
 
             elif opcode == "add" or opcode == "and" or opcode == "xor":
                 opcode_val = 1 if opcode == "add" else 5 if opcode == "and" else 9
@@ -357,31 +375,79 @@ def assemble(lines: List[str], symbols: Dict[str, int], output_path: str, debug:
                     sr2 = parse_register(operands[2], debug)
                     machine_word = (opcode_val << 12) | (dr << 9) | (sr1 << 6) | sr2
                     if debug:
-                        debug_print(f"    -> {opcode.upper()} encoding (register): op={opcode_val}, dr=R{dr}, sr1=R{sr1}, sr2=R{sr2} -> 0x{machine_word:04X}")
+                        op_symbol = "+" if opcode == "add" else "&" if opcode == "and" else "^"
+                        op_name = "ADD" if opcode == "add" else "AND" if opcode == "and" else "XOR"
+                        debug_print(f"    -> {opcode.upper()} encoding (register mode):")
+                        debug_print(f"       Format: [{opcode_val:04b}][DR][SR1][0][00][SR2]")
+                        debug_print(f"       Opcode: {opcode_val:04b} (0x{opcode_val:X}) = 0x{opcode_val << 12:04X}")
+                        debug_print(f"       Destination register: R{dr} = 0x{dr << 9:04X}")
+                        debug_print(f"       Source register 1: R{sr1} = 0x{sr1 << 6:04X}")
+                        debug_print(f"       Source register 2: R{sr2} = 0x{sr2:04X}")
+                        debug_print(f"       Mode bit: 0 (register mode)")
+                        debug_print(f"       Read registers: R{sr1}, R{sr2}")
+                        debug_print(f"       Write register: R{dr}")
+                        debug_print(f"       Operation: R{dr} = R{sr1} {op_symbol} R{sr2}")
+                        debug_print(f"       Encoding: 0x{opcode_val << 12:04X} | 0x{dr << 9:04X} | 0x{sr1 << 6:04X} | 0x{sr2:04X} = 0x{machine_word:04X}")
+                        debug_print(f"       Machine code: 0x{machine_word:04X} ({machine_word:016b})")
                 else:
                     imm5 = parse_constant(operands[2], debug)
                     imm5 = sign_extend(imm5, 5, debug) & 0x1F
                     machine_word = (opcode_val << 12) | (dr << 9) | (sr1 << 6) | 0x20 | imm5
                     if debug:
-                        debug_print(f"    -> {opcode.upper()} encoding (immediate): op={opcode_val}, dr=R{dr}, sr1=R{sr1}, imm5={imm5} -> 0x{machine_word:04X}")
+                        op_symbol = "+" if opcode == "add" else "&" if opcode == "and" else "^"
+                        debug_print(f"    -> {opcode.upper()} encoding (immediate mode):")
+                        debug_print(f"       Format: [{opcode_val:04b}][DR][SR1][1][imm5]")
+                        debug_print(f"       Opcode: {opcode_val:04b} (0x{opcode_val:X}) = 0x{opcode_val << 12:04X}")
+                        debug_print(f"       Destination register: R{dr} = 0x{dr << 9:04X}")
+                        debug_print(f"       Source register 1: R{sr1} = 0x{sr1 << 6:04X}")
+                        debug_print(f"       Mode bit: 1 (immediate mode) = 0x0020")
+                        debug_print(f"       Immediate value: {imm5} (5 bits, signed) = 0x{imm5:02X}")
+                        debug_print(f"       Read register: R{sr1}")
+                        debug_print(f"       Write register: R{dr}")
+                        debug_print(f"       Operation: R{dr} = R{sr1} {op_symbol} {imm5}")
+                        debug_print(f"       Encoding: 0x{opcode_val << 12:04X} | 0x{dr << 9:04X} | 0x{sr1 << 6:04X} | 0x0020 | 0x{imm5:02X} = 0x{machine_word:04X}")
+                        debug_print(f"       Machine code: 0x{machine_word:04X} ({machine_word:016b})")
 
             elif opcode == "not":
                 dr = parse_register(operands[0], debug)
                 sr = parse_register(operands[1], debug)
                 machine_word = (9 << 12) | (dr << 9) | (sr << 6) | 0x3F
                 if debug:
-                    debug_print(f"    -> NOT encoding: dr=R{dr}, sr=R{sr} -> 0x{machine_word:04X}")
+                    debug_print(f"    -> NOT encoding:")
+                    debug_print(f"       Format: [1001][DR][SR][1][11111]")
+                    debug_print(f"       Opcode: 1001 (0x9) = 0x9000")
+                    debug_print(f"       Destination register: R{dr} = 0x{dr << 9:04X}")
+                    debug_print(f"       Source register: R{sr} = 0x{sr << 6:04X}")
+                    debug_print(f"       Immediate bits: 11111 (0x1F) = 0x003F")
+                    debug_print(f"       Read register: R{sr}")
+                    debug_print(f"       Write register: R{dr}")
+                    debug_print(f"       Operation: R{dr} = ~R{sr} (bitwise NOT)")
+                    debug_print(f"       Encoding: 0x9000 | 0x{dr << 9:04X} | 0x{sr << 6:04X} | 0x003F = 0x{machine_word:04X}")
+                    debug_print(f"       Machine code: 0x{machine_word:04X} ({machine_word:016b})")
 
             elif opcode == "jmp":
                 base = parse_register(operands[0], debug)
                 machine_word = (12 << 12) | (base << 6)
                 if debug:
-                    debug_print(f"    -> JMP encoding: base=R{base} -> 0x{machine_word:04X}")
+                    debug_print(f"    -> JMP encoding:")
+                    debug_print(f"       Format: [1100][000][Base][000000]")
+                    debug_print(f"       Opcode: 1100 (0xC) = 0xC000")
+                    debug_print(f"       Base register: R{base} = 0x{base << 6:04X}")
+                    debug_print(f"       Read register: R{base} (target address)")
+                    debug_print(f"       Operation: PC = R{base}")
+                    debug_print(f"       Encoding: 0xC000 | 0x{base << 6:04X} = 0x{machine_word:04X}")
+                    debug_print(f"       Machine code: 0x{machine_word:04X} ({machine_word:016b})")
 
             elif opcode == "ret":
                 machine_word = (12 << 12) | (7 << 6)
                 if debug:
-                    debug_print(f"    -> RET encoding: -> 0x{machine_word:04X}")
+                    debug_print(f"    -> RET encoding (JMP R7):")
+                    debug_print(f"       RET is equivalent to JMP R7")
+                    debug_print(f"       Opcode: 1100 (0xC) = 0xC000")
+                    debug_print(f"       Base register: R7 = 0x01C0")
+                    debug_print(f"       Operation: PC = R7 (return from subroutine)")
+                    debug_print(f"       Encoding: 0xC000 | 0x01C0 = 0x{machine_word:04X}")
+                    debug_print(f"       Machine code: 0x{machine_word:04X} ({machine_word:016b})")
 
             elif opcode == "jsr":
                 target_token = operands[0]
@@ -394,13 +460,28 @@ def assemble(lines: List[str], symbols: Dict[str, int], output_path: str, debug:
                 offset = pc_offset(target, current_address, 11, debug)
                 machine_word = (4 << 12) | (1 << 11) | offset
                 if debug:
-                    debug_print(f"    -> JSR encoding: offset={offset} -> 0x{machine_word:04X}")
+                    debug_print(f"    -> JSR encoding (PC-relative):")
+                    debug_print(f"       Format: [0100][1][PCoffset11]")
+                    debug_print(f"       Opcode: 0100 (0x4) = 0x4000")
+                    debug_print(f"       Mode bit: 1 (PC-relative) = 0x0800")
+                    debug_print(f"       PC offset: {offset} (11 bits) = 0x{offset:04X}")
+                    debug_print(f"       Target address: 0x{target:04X}")
+                    debug_print(f"       Operation: R7 = PC; PC = PC + {offset} = 0x{target:04X}")
+                    debug_print(f"       Encoding: 0x4000 | 0x0800 | 0x{offset:04X} = 0x{machine_word:04X}")
+                    debug_print(f"       Machine code: 0x{machine_word:04X} ({machine_word:016b})")
 
             elif opcode == "jsrr":
                 base = parse_register(operands[0], debug)
                 machine_word = (4 << 12) | (base << 6)
                 if debug:
-                    debug_print(f"    -> JSRR encoding: base=R{base} -> 0x{machine_word:04X}")
+                    debug_print(f"    -> JSRR encoding (register):")
+                    debug_print(f"       Format: [0100][0][000][Base][000000]")
+                    debug_print(f"       Opcode: 0100 (0x4) = 0x4000")
+                    debug_print(f"       Mode bit: 0 (register) = 0x0000")
+                    debug_print(f"       Base register: R{base} = 0x{base << 6:04X}")
+                    debug_print(f"       Operation: R7 = PC; PC = R{base}")
+                    debug_print(f"       Encoding: 0x4000 | 0x{base << 6:04X} = 0x{machine_word:04X}")
+                    debug_print(f"       Machine code: 0x{machine_word:04X} ({machine_word:016b})")
 
             elif opcode == "lea":
                 dr = parse_register(operands[0], debug)
@@ -414,7 +495,16 @@ def assemble(lines: List[str], symbols: Dict[str, int], output_path: str, debug:
                 offset = pc_offset(target, current_address, 9, debug)
                 machine_word = (14 << 12) | (dr << 9) | offset
                 if debug:
-                    debug_print(f"    -> LEA encoding: dr=R{dr}, offset={offset} -> 0x{machine_word:04X}")
+                    debug_print(f"    -> LEA encoding (Load Effective Address):")
+                    debug_print(f"       Format: [1110][DR][PCoffset9]")
+                    debug_print(f"       Opcode: 1110 (0xE) = 0xE000")
+                    debug_print(f"       Destination register: R{dr} = 0x{dr << 9:04X}")
+                    debug_print(f"       PC offset: {offset} (9 bits) = 0x{offset:04X}")
+                    debug_print(f"       Target address: 0x{target:04X}")
+                    debug_print(f"       Write register: R{dr}")
+                    debug_print(f"       Operation: R{dr} = PC + {offset} = 0x{target:04X}")
+                    debug_print(f"       Encoding: 0xE000 | 0x{dr << 9:04X} | 0x{offset:04X} = 0x{machine_word:04X}")
+                    debug_print(f"       Machine code: 0x{machine_word:04X} ({machine_word:016b})")
 
             elif opcode == "ldw" or opcode == "stw":
                 reg = parse_register(operands[0], debug)
@@ -423,7 +513,29 @@ def assemble(lines: List[str], symbols: Dict[str, int], output_path: str, debug:
                 op_val = 6 if opcode == "ldw" else 7
                 machine_word = (op_val << 12) | (reg << 9) | (base << 6) | offset6
                 if debug:
-                    print(f"    -> {opcode.upper()} encoding: reg=R{reg}, base=R{base}, offset6={offset6} -> 0x{machine_word:04X}")
+                    if opcode == "ldw":
+                        debug_print(f"    -> LDW encoding (Load Word):")
+                        debug_print(f"       Format: [0110][DR][Base][offset6]")
+                        debug_print(f"       Opcode: 0110 (0x6) = 0x6000")
+                        debug_print(f"       Destination register: R{reg} = 0x{reg << 9:04X}")
+                        debug_print(f"       Base register: R{base} = 0x{base << 6:04X}")
+                        debug_print(f"       Offset: {offset6} (6 bits, signed) = 0x{offset6:02X}")
+                        debug_print(f"       Read register: R{base} (base address)")
+                        debug_print(f"       Write register: R{reg}")
+                        debug_print(f"       Operation: R{reg} = Mem[R{base} + {offset6}] (word)")
+                        debug_print(f"       Encoding: 0x6000 | 0x{reg << 9:04X} | 0x{base << 6:04X} | 0x{offset6:02X} = 0x{machine_word:04X}")
+                    else:
+                        debug_print(f"    -> STW encoding (Store Word):")
+                        debug_print(f"       Format: [0111][SR][Base][offset6]")
+                        debug_print(f"       Opcode: 0111 (0x7) = 0x7000")
+                        debug_print(f"       Source register: R{reg} = 0x{reg << 9:04X}")
+                        debug_print(f"       Base register: R{base} = 0x{base << 6:04X}")
+                        debug_print(f"       Offset: {offset6} (6 bits, signed) = 0x{offset6:02X}")
+                        debug_print(f"       Read registers: R{reg} (data), R{base} (base address)")
+                        debug_print(f"       Write memory: Mem[R{base} + {offset6}] (word)")
+                        debug_print(f"       Operation: Mem[R{base} + {offset6}] = R{reg} (word)")
+                        debug_print(f"       Encoding: 0x7000 | 0x{reg << 9:04X} | 0x{base << 6:04X} | 0x{offset6:02X} = 0x{machine_word:04X}")
+                    debug_print(f"       Machine code: 0x{machine_word:04X} ({machine_word:016b})")
 
             elif opcode == "ldb" or opcode == "stb":
                 reg = parse_register(operands[0], debug)
@@ -432,7 +544,29 @@ def assemble(lines: List[str], symbols: Dict[str, int], output_path: str, debug:
                 op_val = 2 if opcode == "ldb" else 3
                 machine_word = (op_val << 12) | (reg << 9) | (base << 6) | offset6
                 if debug:
-                    debug_print(f"    -> {opcode.upper()} encoding: reg=R{reg}, base=R{base}, offset6={offset6} -> 0x{machine_word:04X}")
+                    if opcode == "ldb":
+                        debug_print(f"    -> LDB encoding (Load Byte):")
+                        debug_print(f"       Format: [0010][DR][Base][offset6]")
+                        debug_print(f"       Opcode: 0010 (0x2) = 0x2000")
+                        debug_print(f"       Destination register: R{reg} = 0x{reg << 9:04X}")
+                        debug_print(f"       Base register: R{base} = 0x{base << 6:04X}")
+                        debug_print(f"       Offset: {offset6} (6 bits, signed) = 0x{offset6:02X}")
+                        debug_print(f"       Read register: R{base} (base address)")
+                        debug_print(f"       Write register: R{reg}")
+                        debug_print(f"       Operation: R{reg} = Mem[R{base} + {offset6}] (byte, sign-extended)")
+                        debug_print(f"       Encoding: 0x2000 | 0x{reg << 9:04X} | 0x{base << 6:04X} | 0x{offset6:02X} = 0x{machine_word:04X}")
+                    else:
+                        debug_print(f"    -> STB encoding (Store Byte):")
+                        debug_print(f"       Format: [0011][SR][Base][offset6]")
+                        debug_print(f"       Opcode: 0011 (0x3) = 0x3000")
+                        debug_print(f"       Source register: R{reg} = 0x{reg << 9:04X}")
+                        debug_print(f"       Base register: R{base} = 0x{base << 6:04X}")
+                        debug_print(f"       Offset: {offset6} (6 bits, signed) = 0x{offset6:02X}")
+                        debug_print(f"       Read registers: R{reg} (data), R{base} (base address)")
+                        debug_print(f"       Write memory: Mem[R{base} + {offset6}] (byte)")
+                        debug_print(f"       Operation: Mem[R{base} + {offset6}] = R{reg}[7:0] (low byte)")
+                        debug_print(f"       Encoding: 0x3000 | 0x{reg << 9:04X} | 0x{base << 6:04X} | 0x{offset6:02X} = 0x{machine_word:04X}")
+                    debug_print(f"       Machine code: 0x{machine_word:04X} ({machine_word:016b})")
 
             elif opcode in {"lshf", "rshfl", "rshfa"}:
                 dr = parse_register(operands[0], debug)
@@ -440,16 +574,40 @@ def assemble(lines: List[str], symbols: Dict[str, int], output_path: str, debug:
                 amount = parse_constant(operands[2], debug)
                 if opcode == "lshf":
                     mode = 0b00
+                    mode_name = "logical left shift"
                 elif opcode == "rshfl":
                     mode = 0b01
+                    mode_name = "logical right shift"
                 else:
                     mode = 0b11
+                    mode_name = "arithmetic right shift"
                 machine_word = encode_shift(13, dr, sr, mode, amount, debug)
+                if debug:
+                    debug_print(f"    -> {opcode.upper()} encoding:")
+                    debug_print(f"       Format: [1101][DR][SR][mode][amount4]")
+                    debug_print(f"       Opcode: 1101 (0xD) = 0xD000")
+                    debug_print(f"       Destination register: R{dr} = 0x{dr << 9:04X}")
+                    debug_print(f"       Source register: R{sr} = 0x{sr << 6:04X}")
+                    debug_print(f"       Shift mode: {mode:02b} ({mode_name}) = 0x{mode << 4:04X}")
+                    debug_print(f"       Shift amount: {amount} (4 bits) = 0x{amount:04X}")
+                    if opcode == "lshf":
+                        debug_print(f"       Operation: R{dr} = R{sr} << {amount}")
+                    elif opcode == "rshfl":
+                        debug_print(f"       Operation: R{dr} = R{sr} >>> {amount} (logical)")
+                    else:
+                        debug_print(f"       Operation: R{dr} = R{sr} >> {amount} (arithmetic, sign-extended)")
+                    debug_print(f"       Encoding: 0xD000 | 0x{dr << 9:04X} | 0x{sr << 6:04X} | 0x{mode << 4:04X} | 0x{amount:04X} = 0x{machine_word:04X}")
+                    debug_print(f"       Machine code: 0x{machine_word:04X} ({machine_word:016b})")
 
             elif opcode == "rti":
                 machine_word = 0x8000
                 if debug:
-                    debug_print(f"    -> RTI encoding: -> 0x{machine_word:04X}")
+                    debug_print(f"    -> RTI encoding (Return from Interrupt):")
+                    debug_print(f"       Format: [1000][000000000000]")
+                    debug_print(f"       Opcode: 1000 (0x8) = 0x8000")
+                    debug_print(f"       Operation: Restore processor state from interrupt stack")
+                    debug_print(f"       Effect: PC and PSR restored, return from interrupt handler")
+                    debug_print(f"       Machine code: 0x{machine_word:04X} ({machine_word:016b})")
 
             elif opcode == "trap":
                 machine_word = encode_trap(operands[0], debug)
@@ -457,12 +615,24 @@ def assemble(lines: List[str], symbols: Dict[str, int], output_path: str, debug:
             elif opcode == "halt":
                 machine_word = 0xF025
                 if debug:
-                    debug_print(f"    -> HALT encoding: -> 0x{machine_word:04X}")
+                    debug_print(f"    -> HALT encoding (TRAP x25):")
+                    debug_print(f"       TRAP instruction format: [1111][trapvect8]")
+                    debug_print(f"       Opcode: 1111 (0xF) = 0xF000")
+                    debug_print(f"       Trap vector: x25 (0x25) = 0x0025")
+                    debug_print(f"       Encoding: 0xF000 | 0x0025 = 0x{machine_word:04X}")
+                    debug_print(f"       Operation: System call to halt the program")
+                    debug_print(f"       Effect: Program execution stops, no return value")
+                    debug_print(f"       Machine code: 0x{machine_word:04X} ({machine_word:016b})")
 
             elif opcode == "nop":
                 machine_word = 0x0000
                 if debug:
-                    debug_print(f"    -> NOP encoding: -> 0x{machine_word:04X}")
+                    debug_print(f"    -> NOP encoding (No Operation):")
+                    debug_print(f"       Format: [0000][000000000000]")
+                    debug_print(f"       Opcode: 0000 (0x0) = 0x0000")
+                    debug_print(f"       Operation: No operation, PC advances to next instruction")
+                    debug_print(f"       Effect: Consumes one instruction cycle, no side effects")
+                    debug_print(f"       Machine code: 0x{machine_word:04X} ({machine_word:016b})")
 
             else:
                 raise AssemblyError(f"Unhandled opcode {opcode}")

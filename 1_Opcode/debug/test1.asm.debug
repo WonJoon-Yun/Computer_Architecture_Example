@@ -62,7 +62,16 @@ Final address: 0x300E (12302)
     -> LEA target: Symbol 'ten' -> 0x300C
     -> PC offset: target=0x300C, current=0x3000, offset=5 (9 bits)
     -> Masked offset: 0x0005 (binary: 000000101)
-    -> LEA encoding: dr=R0, offset=5 -> 0xE005
+    -> LEA encoding (Load Effective Address):
+       Format: [1110][DR][PCoffset9]
+       Opcode: 1110 (0xE) = 0xE000
+       Destination register: R0 = 0x0000
+       PC offset: 5 (9 bits) = 0x0005
+       Target address: 0x300C
+       Write register: R0
+       Operation: R0 = PC + 5 = 0x300C
+       Encoding: 0xE000 | 0x0000 | 0x0005 = 0xE005
+       Machine code: 0xE005 (1110000000000101)
     -> Write: 0xE005 (binary: 1110000000000101)
   [Line   4] Tokenize: '        ldw r1, r0, #0'
     -> Tokens: ['ldw', 'r1', 'r0', '#0']
@@ -70,6 +79,17 @@ Final address: 0x300E (12302)
     -> Parse register: r1 -> R1
     -> Parse register: r0 -> R0
     -> Parse constant (decimal): #0 -> 0 (0x0000)
+    -> LDW encoding (Load Word):
+       Format: [0110][DR][Base][offset6]
+       Opcode: 0110 (0x6) = 0x6000
+       Destination register: R1 = 0x0200
+       Base register: R0 = 0x0000
+       Offset: 0 (6 bits, signed) = 0x00
+       Read register: R0 (base address)
+       Write register: R1
+       Operation: R1 = Mem[R0 + 0] (word)
+       Encoding: 0x6000 | 0x0200 | 0x0000 | 0x00 = 0x6200
+       Machine code: 0x6200 (0110001000000000)
     -> Write: 0x6200 (binary: 0110001000000000)
   [Line   5] Tokenize: 'start   add r1, r1, #-1'
     -> Tokens: ['start', 'add', 'r1', 'r1', '#-1']
@@ -77,7 +97,18 @@ Final address: 0x300E (12302)
     -> Parse register: r1 -> R1
     -> Parse register: r1 -> R1
     -> Parse constant (decimal): #-1 -> -1 (0x-001)
-    -> ADD encoding (immediate): op=1, dr=R1, sr1=R1, imm5=31 -> 0x127F
+    -> ADD encoding (immediate mode):
+       Format: [0001][DR][SR1][1][imm5]
+       Opcode: 0001 (0x1) = 0x1000
+       Destination register: R1 = 0x0200
+       Source register 1: R1 = 0x0040
+       Mode bit: 1 (immediate mode) = 0x0020
+       Immediate value: 31 (5 bits, signed) = 0x1F
+       Read register: R1
+       Write register: R1
+       Operation: R1 = R1 + 31
+       Encoding: 0x1000 | 0x0200 | 0x0040 | 0x0020 | 0x1F = 0x127F
+       Machine code: 0x127F (0001001001111111)
     -> Write: 0x127F (binary: 0001001001111111)
   [Line   6] Tokenize: '        brz done'
     -> Tokens: ['brz', 'done']
@@ -85,7 +116,11 @@ Final address: 0x300E (12302)
     -> BR target: Symbol 'done' -> 0x300A
     -> PC offset: target=0x300A, current=0x3006, offset=1 (9 bits)
     -> Masked offset: 0x0001 (binary: 000000001)
-    -> BR encoding: n=0, z=1, p=0, offset=1 -> 0x0401 (0000010000000001)
+    -> BR encoding:
+       Condition flags: N=0, Z=1, P=0 (Z)
+       Target address: 0x300A
+       Operation: if (condition) PC = PC + 1 = 0x300A
+       Machine code: 0x0401 (0000010000000001)
     -> Write: 0x0401 (binary: 0000010000000001)
   [Line   7] Tokenize: '        br start'
     -> Tokens: ['br', 'start']
@@ -93,21 +128,34 @@ Final address: 0x300E (12302)
     -> BR target: Symbol 'start' -> 0x3004
     -> PC offset: target=0x3004, current=0x3008, offset=-3 (9 bits)
     -> Masked offset: 0x01FD (binary: 111111101)
-    -> BR encoding: n=1, z=1, p=1, offset=509 -> 0x0FFD (0000111111111101)
+    -> BR encoding:
+       Condition flags: N=1, Z=1, P=1 (NZP)
+       Target address: 0x3004
+       Operation: if (condition) PC = PC + 509 = 0x3004
+       Machine code: 0x0FFD (0000111111111101)
     -> Write: 0x0FFD (binary: 0000111111111101)
   [Line   9] Tokenize: 'done    trap x25          ;the last executable instruction'
     -> Tokens: ['done', 'trap', 'x25']
     -> Comment: 'the last executable instruction'
   [Line   9] Address 0x300A: trap ['x25']
     -> Parse constant (hex): x25 -> 37 (0x0025)
-    -> TRAP encoding: vector=37 -> 0xF025
+    -> TRAP encoding:
+       TRAP instruction format: [1111][trapvect8]
+       Opcode: 1111 (0xF) = 0xF000
+       Trap vector: x25 = 0x25 = 0x0025
+       Encoding: 0xF000 | 0x0025 = 0xF025
+       Machine code: 0xF025 (1111000000100101)
     -> Write: 0xF025 (binary: 1111000000100101)
   [Line  10] Tokenize: 'ten     .fill x000a       ;this is 10 in 2's comp, hexadecimal'
     -> Tokens: ['ten', '.fill', 'x000a']
     -> Comment: 'this is 10 in 2's comp, hexadecimal'
   [Line  10] Address 0x300C: .fill ['x000a']
     -> Parse constant (hex): x000a -> 10 (0x000A)
-    -> .FILL encoding: 0x000A
+    -> .FILL pseudo-op encoding:
+       Pseudo-op: .FILL (not a real instruction)
+       Value: 10 (0x000A)
+       Operation: Store 16-bit value at current address
+       Output: 0x000A (0000000000001010)
     -> Write: 0x000A (binary: 0000000000001010)
   [Line  11] Tokenize: '        .end              ;the pseudo-op, delimiting the source program'
     -> Tokens: ['.end']

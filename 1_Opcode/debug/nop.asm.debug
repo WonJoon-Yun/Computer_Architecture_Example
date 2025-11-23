@@ -35,17 +35,32 @@ Final address: 0x3006 (12294)
   [Line   2] Tokenize: '		nop'
     -> Tokens: ['nop']
   [Line   2] Address 0x3000: nop []
-    -> NOP encoding: -> 0x0000
+    -> NOP encoding (No Operation):
+       Format: [0000][000000000000]
+       Opcode: 0000 (0x0) = 0x0000
+       Operation: No operation, PC advances to next instruction
+       Effect: Consumes one instruction cycle, no side effects
+       Machine code: 0x0000 (0000000000000000)
     -> Write: 0x0000 (binary: 0000000000000000)
   [Line   3] Tokenize: '		nop'
     -> Tokens: ['nop']
   [Line   3] Address 0x3002: nop []
-    -> NOP encoding: -> 0x0000
+    -> NOP encoding (No Operation):
+       Format: [0000][000000000000]
+       Opcode: 0000 (0x0) = 0x0000
+       Operation: No operation, PC advances to next instruction
+       Effect: Consumes one instruction cycle, no side effects
+       Machine code: 0x0000 (0000000000000000)
     -> Write: 0x0000 (binary: 0000000000000000)
   [Line   4] Tokenize: '		nop'
     -> Tokens: ['nop']
   [Line   4] Address 0x3004: nop []
-    -> NOP encoding: -> 0x0000
+    -> NOP encoding (No Operation):
+       Format: [0000][000000000000]
+       Opcode: 0000 (0x0) = 0x0000
+       Operation: No operation, PC advances to next instruction
+       Effect: Consumes one instruction cycle, no side effects
+       Machine code: 0x0000 (0000000000000000)
     -> Write: 0x0000 (binary: 0000000000000000)
   [Line   5] Tokenize: '		.end'
     -> Tokens: ['.end']
